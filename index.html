@@ -149,12 +149,15 @@ textarea.inp{min-height:80px;resize:vertical}
 .notes-box p{margin:2px 0}
 /* body diagrams */
 .diagrams{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.diagrams.one{grid-template-columns:1fr;max-width:520px;margin:0 auto}
 @media(max-width:900px){.diagrams{grid-template-columns:1fr}}
 .dg h3{text-align:center;letter-spacing:.3em;margin-bottom:6px}
 .mk-wrap{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;touch-action:pan-y;user-select:none;-webkit-user-select:none;overflow:hidden}
 .mk-wrap.armed{cursor:crosshair;touch-action:none}
 .mk-wrap img{display:block;width:100%;height:auto;pointer-events:none}
-.mk{position:absolute;transform:translate(-50%,-50%);font-family:var(--mark);font-weight:700;color:#1a47d1;white-space:nowrap;line-height:1;padding:6px 6px;cursor:grab;touch-action:none;font-size:calc(var(--sz,26)*var(--k,1)*1px)}
+.mk{position:absolute;transform:translate(-50%,-50%);font-family:var(--mark);font-weight:700;color:#1a47d1;line-height:1.08;padding:5px 4px;cursor:grab;touch-action:none;font-size:calc(var(--sz,26)*var(--k,1)*1px);display:flex;flex-direction:column;align-items:center;text-align:center;white-space:normal}
+.mk-line{display:flex;flex-wrap:nowrap;justify-content:center;gap:0 .14em}
+.mk-line+.mk-line{margin-top:.05em}
 .mk.lock{cursor:default}
 .mk.sel{outline:2px dashed var(--blue);outline-offset:0;border-radius:6px;background:rgba(23,70,201,.07)}
 .mk.slot{width:calc(30px*var(--k,1));height:calc(30px*var(--k,1));min-width:22px;min-height:22px;border:1.5px dashed rgba(23,70,201,.55);border-radius:50%;padding:0;background:rgba(255,255,255,.55)}
@@ -727,10 +730,11 @@ const FONTS = ['Arial', 'Noto Sans TC', 'Times New Roman', 'Courier New'];
 
 function markPanel(initMarks, o) {
   let marks = initMarks, tool = null, sel = null;
+  const views = o.views || ['ext', 'str'];
   const root = h('div');
   const pal = h('div', { class: 'pal' }), hint = h('div', { class: 'hint' }), selbar = h('div', { class: 'selbar hidden' });
   const wraps = {};
-  const diagrams = h('div', { class: 'diagrams' }, ['ext', 'str'].map(v => {
+  const diagrams = h('div', { class: 'diagrams' + (views.length === 1 ? ' one' : '') }, views.map(v => {
     const w = h('div', { class: 'mk-wrap', data: { v } }, h('img', { src: IMG[v], alt: DIAG[v], draggable: false }));
     wraps[v] = w;
     if ('ResizeObserver' in window) new ResizeObserver(() => w.style.setProperty('--k', (w.clientWidth / 520).toFixed(3))).observe(w);
@@ -743,7 +747,7 @@ function markPanel(initMarks, o) {
     const slot = !m.text;
     const e = h('div', { class: 'mk' + (slot ? ' slot' : '') + (m.locked ? ' lock' : '') + (sel === m.id ? ' sel' : ''), data: { id: m.id }, style: { left: m.x * 100 + '%', top: m.y * 100 + '%', color: m.color || '', fontFamily: `${m.font || 'Arial'},var(--mark)`, '--sz': m.size || 26 } });
     if (slot) { if (m.label) e.title = m.label; }
-    else toks(m.text).forEach((t, i) => { if (i) e.append(' '); e.append(h('span', { class: 't' + (m.view === 'str' && t === 'X' ? ' x-y' : '') }, t)); });
+    else m.text.split('\n').forEach(line => { const row = h('div', { class: 'mk-line' }); toks(line).forEach(t => row.append(h('span', { class: 't' + (m.view === 'str' && t === 'X' ? ' x-y' : '') }, t))); e.append(row); });
     if (!o.ro) bindMk(e, m);
     return e;
   }
@@ -777,20 +781,27 @@ function markPanel(initMarks, o) {
     pal.innerHTML = ''; if (o.ro) return;
     add(pal, [h('button', { type: 'button', class: 'tool' + (!tool ? ' on' : ''), onclick: () => { tool = null; sel = null; render(); } }, '✋ 選取／移動'),
     o.slotMode ? h('button', { type: 'button', class: 'tool' + (tool === 'slot' ? ' on' : ''), onclick: () => { tool = tool === 'slot' ? null : 'slot'; sel = null; render(); } }, '＋ 新增位置點')
-      : MARKS.map(t => h('button', { type: 'button', class: tool === t ? 'on' : '', 'aria-label': '標記 ' + t, onclick: () => palClick(t) }, t))]);
+      : [MARKS.map(t => h('button', { type: 'button', class: tool === t ? 'on' : '', 'aria-label': '標記 ' + t, onclick: () => palClick(t) }, t)),
+      h('button', { type: 'button', class: 'tool', title: '在目前選取的標記中另起一行', onclick: newLine }, '⏎ 換行')]]);
   }
   function palClick(t) {
     const m = sel && find(sel);
     if (m) {
       if (m.locked) return toast('此標記已鎖定', true);
       if (!can('mark.edit') && !can('mark.add')) return toast('沒有修改標記的權限', true);
-      m.text = (m.text ? m.text + ' ' : '') + t; commit(true);
+      m.text = m.text ? (m.text.endsWith('\n') ? m.text : m.text + ' ') + t : t; commit(true);
     } else { tool = tool === t ? null : t; render(); }
+  }
+  function newLine() {
+    const m = sel && find(sel);
+    if (!m || !m.text) return toast('請先選取已有文字的標記', true);
+    if (m.locked) return toast('此標記已鎖定', true);
+    if (!m.text.endsWith('\n')) { m.text += '\n'; commit(true); }
   }
   function drawHint() {
     if (o.ro) { hint.classList.add('hidden'); return; } hint.classList.remove('hidden');
     const m = sel && find(sel);
-    hint.textContent = m ? `已選取「${m.text || m.label || '空位'}」：點上方符號可疊加，拖曳可移動。` :
+    hint.textContent = m ? `已選取「${(m.text || '').replace(/\n/g, ' / ') || m.label || '空位'}」：點上方符號可疊加，「⏎ 換行」可另起一行，拖曳可移動。` :
       tool === 'slot' ? '點選圖面新增預設位置點。' : tool ? `已選「${tool}」：點選圖面放置標記。` :
         o.slotMode ? '點「新增位置點」後點圖面，或拖曳現有位置點調整。' : '點符號後點圖面放置；或點虛線圓圈選取位置後再點符號。';
   }
@@ -851,7 +862,6 @@ function autoRating(ins) {
   }
   return false;
 }
-const TABS = ['基本資料', '車輛配備', '外觀結構', '機能檢查', '照片', '確認'];
 let inspTab = 0;
 
 function vInspect([id, mode]) {
@@ -867,6 +877,13 @@ function vInspect([id, mode]) {
     if (!(can('inspect.view') || can('rec.view'))) return h('div', { class: 'empty' }, '您沒有查看查定的權限。');
     if (mode === 'view') inspTab = 0;
   }
+  const defs = [
+    ['基本資料', tabBasic], ['車輛配備', tabEquip], ['車身外觀', tabExterior], ['車體結構', tabStructure],
+    ...CHECK_GROUPS.map(([cat, items]) => [cat, c => tabCheckGroup(c, cat, items)]),
+    ['車況註記', tabNotes], ['照片', tabPhotos], ['確認', tabConfirm], ['PDF預覽', tabPdfPreview]
+  ];
+  const TABS = defs.map(d => d[0]);
+  if (inspTab >= defs.length) inspTab = 0;
   const wrap = h('div', { class: ro ? 'ro' : '' });
   const head = h('div', { class: 'head-info' });
   const tabsEl = h('div', { class: 'tabs', role: 'tablist' });
@@ -884,11 +901,11 @@ function vInspect([id, mode]) {
     add(head, [plateChip(ins.plate), h('b', null, carName(ins)), h('span', { class: 'tag ' + (ins.status === 'done' ? 'green' : 'orange') }, ins.status === 'done' ? '已完成' : '草稿'),
       h('span', { class: 'sm muted' }, '查定師：' + (ins.inspectorName || uname(ins.inspectorId))), ro ? h('span', { class: 'tag' }, '僅供檢視') : h('span', { class: 'sm muted' }, '自動儲存')]);
   }
-  const ctx = { ins, ro, touch, go: n => showTab(n) };
+  const ctx = { ins, ro, touch, go: n => showTab(n), photosIdx: TABS.indexOf('照片') };
   function showTab(n) {
     inspTab = n; body.innerHTML = '';
     tabsEl.querySelectorAll('button').forEach((b, i) => { b.classList.toggle('on', i === n); b.setAttribute('aria-selected', i === n); });
-    body.append([tabBasic, tabEquip, tabBody, tabCheck, tabPhotos, tabConfirm][n](ctx));
+    body.append(defs[n][1](ctx));
     drawBar(); const on = tabsEl.children[n]; on && on.scrollIntoView && on.scrollIntoView({ inline: 'center', block: 'nearest' });
     if (n) window.scrollTo(0, 0);
   }
@@ -903,7 +920,8 @@ function vInspect([id, mode]) {
   return wrap;
 }
 
-function tabBasic({ ins, ro, touch }) {
+function tabBasic(ctx) {
+  const { ins, ro, touch } = ctx;
   const D = n => { if (ro) n.disabled = true; return n; };
   const inp = (k, o = {}) => D(h('input', { class: 'inp', value: ins[k], type: o.type, inputmode: o.mode, placeholder: o.ph, style: o.up ? { textTransform: 'uppercase' } : null, oninput: e => { ins[k] = o.up ? e.target.value.toUpperCase() : e.target.value; touch(); } }));
   const sel = (k, list, blank = '請選擇') => D(selectEl(list, ins[k], v => { ins[k] = v; touch(); }, blank));
@@ -914,7 +932,7 @@ function tabBasic({ ins, ro, touch }) {
   const bodySel = selectEl(BODY_RATINGS, ins.bodyRating, v => { if (ins.autoTrigger && v !== ins.bodyRating) ins.autoLog.push({ t: Date.now(), by: cur.name, rule: '人工修改自動判定結果', from: ins.bodyRating, to: v }); ins.bodyRating = v; touch(); updBadge(); }, '—');
   bodySel.disabled = ro || !can('inspect.rating'); updBadge();
   const gCk = (val, label) => h('label', { class: 'ck' + (ins.guarantee === val ? ' on' : '') }, D(h('input', { type: 'checkbox', checked: ins.guarantee === val, onchange: e => { ins.guarantee = e.target.checked ? val : ''; touch(); e.target.closest('.grid').querySelectorAll('.ck').forEach((c, i) => { const on = (i === 0 && ins.guarantee === 'yes') || (i === 1 && ins.guarantee === 'no'); c.classList.toggle('on', on); c.querySelector('input').checked = on; }); } })), label);
-  return h('div', { class: 'panel' }, h('div', { class: 'grid g3' },
+  return h('div', null, quickPhotoBar(ctx, '其他', '車輛照片（車牌／車身號碼等）', ctx.photosIdx), h('div', { class: 'panel' }, h('div', { class: 'grid g3' },
     field('車牌號牌', inp('plate', { up: true }), true), fb, fm,
     field('出廠年月', h('div', { class: 'inline' }, D(selectEl(years, ins.year, v => { ins.year = v; touch(); }, '年')), D(selectEl(Array.from({ length: 12 }, (_, i) => String(i + 1)), ins.month, v => { ins.month = v; touch(); }, '月')))),
     field('排氣量', h('div', { class: 'inline' }, inp('cc', { type: 'number', mode: 'numeric' }), h('span', { class: 'muted' }, 'CC'))),
@@ -929,11 +947,12 @@ function tabBasic({ ins, ro, touch }) {
     h('div'),
     field('車體評價', h('div', { class: 'inline' }, bodySel, badge)),
     field('內裝評價', sel('interiorRating', IN_RATINGS, '—')),
-    field('查定師（自動帶入）', h('input', { class: 'inp', value: ins.inspectorName || cur.name, disabled: true }))));
+    field('查定師（自動帶入）', h('input', { class: 'inp', value: ins.inspectorName || cur.name, disabled: true })))));
 }
 
 const EQUIP_FIELD = { srs: 'srsCount', sunroof: 'sunroof', alloy: 'alloy', slide: 'slideCount', eseat: 'eseatInfo', key: 'keyCount' };
-function tabEquip({ ins, ro, touch }) {
+function tabEquip(ctx) {
+  const { ins, ro, touch } = ctx;
   const grid = h('div', { class: 'grid g4' });
   for (const [k, name] of EQUIP) {
     const ex = EQUIP_EXTRA[k], fld = EQUIP_FIELD[k];
@@ -949,30 +968,73 @@ function tabEquip({ ins, ro, touch }) {
     lab.append(h('input', { type: 'checkbox', checked: !!ins.equip[k], disabled: ro, onchange: e => { ins.equip[k] = e.target.checked; touch(); draw(); } }), h('span', null, name), extra);
     draw(); grid.append(lab);
   }
-  return h('div', { class: 'panel' }, h('h3', null, '車輛配備（勾選有配備的項目）'), grid);
+  return h('div', null, quickPhotoBar(ctx, '其他', '配備照片', ctx.photosIdx), h('div', { class: 'panel' }, h('h3', null, '車輛配備（勾選有配備的項目）'), grid));
 }
 
-function tabBody({ ins, ro, touch }) {
+function quickPhotoBar(ctx, defaultCat, label, photosTabIdx) {
+  const { ins, ro, touch, go } = ctx;
+  let cat = defaultCat;
+  const catSel = selectEl(CATS, cat, v => { cat = v; refreshStrip(); }, null, 'inp'); catSel.style.cssText = 'width:120px;min-height:34px';
+  const countSpan = h('span', { class: 'sm muted' });
+  const strip = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', marginTop: '8px' } });
+  function catList() { return ins.photos.filter(p => p.cat === cat); }
+  function refreshStrip() {
+    strip.innerHTML = ''; const list = catList(); countSpan.textContent = `（${cat} 共 ${list.length} 張）`;
+    list.forEach(p => {
+      const im = h('img', { style: { width: '54px', height: '42px', objectFit: 'cover', borderRadius: '4px', cursor: 'pointer', border: '1px solid var(--line2)' }, alt: cat });
+      getPhoto(p.id).then(u => im.src = u || '');
+      im.addEventListener('click', () => openViewer(ins, catList(), catList().indexOf(p), { ro, touch, refresh: refreshStrip }));
+      strip.append(im);
+    });
+    if (!list.length) strip.append(h('span', { class: 'sm muted' }, '此分類尚無照片'));
+  }
+  const addPhoto = async (url, c) => { const id = uid(); await putPhoto(id, url); ins.photos.push({ id, cat: c, ts: Date.now() }); touch(); refreshStrip(); };
+  const camIn = h('input', { type: 'file', accept: 'image/*', capture: 'environment', class: 'hidden', onchange: async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; await addPhoto(await compressFile(f), cat); } });
+  const upIn = h('input', { type: 'file', accept: 'image/*', multiple: true, class: 'hidden', onchange: async e => { const fs = [...e.target.files]; e.target.value = ''; for (const f of fs) { try { await addPhoto(await compressFile(f), cat); } catch (_) { } } } });
+  refreshStrip();
+  return h('div', { class: 'panel', style: { marginBottom: '14px' } },
+    h('div', { class: 'row' }, h('span', null, '📷 ', label), catSel, countSpan, h('span', { class: 'spacer' }),
+      !ro && h('button', { class: 'btn sm pri', type: 'button', onclick: async () => { const ok = await openCamera({ title: label, getCat: () => cat, setCat: v => { cat = v; catSel.value = v; }, onShot: (u, c) => addPhoto(u, c) }); if (!ok) camIn.click(); } }, '連續拍攝'),
+      !ro && h('button', { class: 'btn sm', type: 'button', onclick: () => upIn.click() }, '上傳'),
+      h('button', { class: 'btn sm', type: 'button', onclick: () => go(photosTabIdx) }, '照片管理 ▶')),
+    strip, camIn, upIn);
+}
+
+function tabExterior(ctx) {
+  const { ins, ro, touch } = ctx;
   const count = h('span', { class: 'big-num' }, countPanels(ins.marks));
   const upd = () => { count.textContent = countPanels(ins.marks); touch(); };
-  const panel = markPanel(ins.marks, { ro, onChange: upd });
+  const panel = markPanel(ins.marks, { ro, views: ['ext'], onChange: upd });
   const tplSel = selectEl(S.bodyTpls.map(t => [t.id, t.name]), ins.bodyTplId, v => ins.bodyTplId = v);
   const tire = h('input', { class: 'inp', type: 'number', min: 0, max: 4, value: ins.tireChange, style: { width: '80px' }, disabled: ro, oninput: e => { let v = e.target.value; if (v !== '') v = String(Math.max(0, Math.min(4, +v || 0))); ins.tireChange = v; touch(); } });
   return h('div', null,
+    quickPhotoBar(ctx, '車身外觀', '車身外觀照片', ctx.photosIdx),
     !ro && h('div', { class: 'panel row' }, h('span', { class: 'sm' }, '標記模板'), h('div', { style: { minWidth: '160px' } }, tplSel),
       h('button', { class: 'btn sm', onclick: () => { const t = S.bodyTpls.find(x => x.id === ins.bodyTplId); if (!t) return; ins.marks = ins.marks.filter(m => m.text).concat(cloneMarks(t.marks.filter(m => !m.text))); panel.api.setMarks(ins.marks); upd(); toast('已載入模板位置點'); } }, '載入模板'),
       h('span', { class: 'sm muted' }, '載入後會保留已填的標記，並補上模板的空位點。')),
     h('div', { class: 'panel' }, panel,
-      h('div', { class: 'summary-row' }, h('span', null, '板金片數 ', count, ' 片'), h('span', { class: 'sm muted' }, '僅計車身外觀上的 Ⓟ Ⓑ ⓑ Ⓢ ∆ ∆∆ SS，車體結構不計'), h('span', { class: 'spacer' }),
+      h('div', { class: 'summary-row' }, h('span', null, '板金片數 ', count, ' 片'), h('span', { class: 'sm muted' }, '僅計車身外觀上的 Ⓟ Ⓑ ⓑ Ⓢ ∆ ∆∆ SS'), h('span', { class: 'spacer' }),
         h('label', { class: 'row', style: { gap: '6px' } }, '輪胎更換數', tire, '條（0～4）'))));
 }
+function tabStructure(ctx) {
+  const { ins, ro, touch } = ctx;
+  const panel = markPanel(ins.marks, { ro, views: ['str'], onChange: () => touch() });
+  return h('div', null,
+    quickPhotoBar(ctx, '車體結構', '車體結構照片', ctx.photosIdx),
+    h('div', { class: 'panel' }, panel,
+      h('div', { class: 'summary-row' }, h('span', { class: 'sm muted' }, '車體結構上的標記不計入板金片數；X 會自動顯示黃底。'))));
+}
 
-function tabCheck({ ins, ro, touch }) {
-  const groups = CHECK_GROUPS.map(([cat, items]) => {
-    const grid = h('div', { class: 'grid g4' });
-    items.forEach(n => { const lab = h('label', { class: 'ck' + (ins.checks[n] ? ' on' : '') }, h('input', { type: 'checkbox', checked: !!ins.checks[n], disabled: ro, onchange: e => { ins.checks[n] = e.target.checked; lab.classList.toggle('on', e.target.checked); touch(); } }), n); grid.append(lab); });
-    return h('div', { style: { marginBottom: '14px' } }, h('h4', { class: 'sm', style: { color: 'var(--mute)', margin: '0 0 6px' } }, cat), grid);
-  });
+function tabCheckGroup(ctx, cat, items) {
+  const { ins, ro, touch } = ctx;
+  const grid = h('div', { class: 'grid g4' });
+  items.forEach(n => { const lab = h('label', { class: 'ck' + (ins.checks[n] ? ' on' : '') }, h('input', { type: 'checkbox', checked: !!ins.checks[n], disabled: ro, onchange: e => { ins.checks[n] = e.target.checked; lab.classList.toggle('on', e.target.checked); touch(); } }), n); grid.append(lab); });
+  return h('div', null, quickPhotoBar(ctx, '其他', cat + '照片', ctx.photosIdx),
+    h('div', { class: 'panel' }, h('h3', null, cat, '（勾選有異常的項目）'), items.length ? grid : h('p', { class: 'sm muted' }, '這個分類目前沒有項目，可以到系統設定的「機能件設定」新增。')));
+}
+
+function tabNotes(ctx) {
+  const { ins, ro, touch } = ctx;
   const phr = h('div', { class: 'phr' }), notes = h('div', { class: 'notes-box' });
   const drawNotes = () => { notes.innerHTML = ''; ins.phrases.length ? ins.phrases.forEach(p => notes.append(h('p', null, p + '。'))) : notes.append(h('span', { class: 'muted' }, '尚未選擇片語')); };
   function changed() { autoRating(ins); touch(); drawNotes(); drawPhr(); }
@@ -987,7 +1049,7 @@ function tabCheck({ ins, ro, touch }) {
     if (!ro) phr.append(h('button', { type: 'button', class: 'chip', style: { borderStyle: 'dashed', color: 'var(--blue)' }, onclick: async () => { const v = await promptBox('新增片語', '片語內容（例如：左前葉子板烤漆）'); if (!v) return; if (!S.phrases.some(p => p.text === v) && !DEF_PHRASES.includes(v)) { S.phrases.push({ id: uid(), text: v }); saveNow('phrases'); } if (!ins.phrases.includes(v)) ins.phrases.push(v); changed(); } }, '＋ 新增片語'));
   }
   drawNotes(); drawPhr();
-  return h('div', null, h('div', { class: 'panel' }, h('h3', null, '機能件檢查（勾選有異常的項目）'), groups),
+  return h('div', null, quickPhotoBar(ctx, '其他', '車況註記照片', ctx.photosIdx),
     h('div', { class: 'panel' }, h('h3', null, '車況輔助註記（快速片語，可複選）'), phr, h('p', { class: 'sm muted' }, '註記內容預覽（輸出到報告時每個片語一行並加句號）'), notes));
 }
 
@@ -1023,6 +1085,23 @@ function tabConfirm({ ins, ro, touch, go }) {
     warn.length ? h('div', { class: 'hint', style: { background: 'var(--orange-s)', color: 'var(--orange)' } }, '提醒：' + warn.join('；')) : null,
     !ro && h('div', { class: 'row' }, h('button', { class: 'btn pri', style: { minHeight: '46px' }, onclick: done }, ins.status === 'done' ? '更新並預覽 PDF' : '完成查定並預覽 PDF'), h('button', { class: 'btn', onclick: () => { touch(); toast('已儲存草稿'); } }, '儲存草稿')),
     ro && can('pdf.preview') && h('a', { class: 'btn pri', href: '#/pdf/' + ins.id }, '預覽 PDF'));
+}
+
+function tabPdfPreview(ctx) {
+  const { ins } = ctx;
+  const wrap = h('div');
+  const info = h('p', { class: 'sm muted' }, '正在載入 PDF 預覽…');
+  let tpl = S.pdfTpls.find(t => t.isDefault) || S.pdfTpls[0];
+  const holder = h('div'); let stage, photos = {};
+  const tSel = selectEl(S.pdfTpls.map(t => [t.id, t.name]), tpl.id, v => { tpl = S.pdfTpls.find(t => t.id === v); draw(); });
+  const toolbar = h('div', { class: 'pdf-tools' }, h('span', { class: 'sm' }, '報告模板'), h('div', { style: { minWidth: '200px' } }, tSel), h('span', { class: 'spacer' }),
+    can('pdf.download') && h('button', { class: 'btn pri', type: 'button', onclick: () => stage && doPrint(stage, ins, true) }, '下載 PDF'),
+    can('pdf.print') && h('button', { class: 'btn', type: 'button', onclick: () => stage && doPrint(stage, ins, false) }, '列印'));
+  const draw = () => { holder.innerHTML = ''; stage = pdfStage(buildPages(ins, tpl, photos)); holder.append(stage); requestAnimationFrame(() => stage.relayout()); info.classList.add('hidden'); };
+  wrap.append(h('p', { class: 'sm muted' }, '這是根據目前已填寫的資料即時產生的預覽，尚未儲存的欄位也會顯示在這裡。'), toolbar, info, holder);
+  loadPhotoMap(ins).then(m => { photos = m; draw(); });
+  const rl = () => stage && stage.isConnected && stage.relayout(); window.addEventListener('resize', rl);
+  return wrap;
 }
 
 /* ========== image helpers ========== */
@@ -1277,7 +1356,7 @@ function sampleInspection() {
   return ins;
 }
 const CELL = (l, v, cls = '') => `<div class="p-cell ${cls}"><small>${l}</small><b>${v == null || v === '' ? '&nbsp;' : esc(v)}</b></div>`;
-const mkHtml = (ins, view, tpl) => ins.marks.filter(m => m.view === view && m.text).map(m => `<div class="mk" style="left:${(m.x * 100).toFixed(2)}%;top:${(m.y * 100).toFixed(2)}%;color:${esc(m.color || '#1a47d1')};font-family:${esc(m.font || 'Arial')},Arial,var(--mark);font-size:${(tpl.markSize * (m.size || 26) / 26).toFixed(1)}px">${toks(m.text).map(t => `<span class="t${view === 'str' && t === 'X' ? ' x-y' : ''}">${esc(t)}</span>`).join(' ')}</div>`).join('');
+const mkHtml = (ins, view, tpl) => ins.marks.filter(m => m.view === view && m.text).map(m => `<div class="mk" style="left:${(m.x * 100).toFixed(2)}%;top:${(m.y * 100).toFixed(2)}%;color:${esc(m.color || '#1a47d1')};font-family:${esc(m.font || 'Arial')},Arial,var(--mark);font-size:${(tpl.markSize * (m.size || 26) / 26).toFixed(1)}px">${m.text.split('\n').map(line => `<div class="mk-line">${toks(line).map(t => `<span class="t${view === 'str' && t === 'X' ? ' x-y' : ''}">${esc(t)}</span>`).join('')}</div>`).join('')}</div>`).join('');
 function secHtml(k, ins, tpl) {
   const cb = (on, t) => `<span>${on ? '☑' : '☐'} ${esc(t)}</span>`;
   if (k === 'header') return `<div class="p-head">${tpl.logo ? `<img src="${tpl.logo}" alt="">` : ''}<span class="cn">${esc(tpl.company)}</span><span class="p-hdrtxt">${esc(tpl.headerText)}</span></div><div class="p-title">${esc(tpl.title)}</div>`;
@@ -1291,7 +1370,7 @@ ${CELL('車門數', ins.doors)}${CELL('長短軸（輪胎數）', (ins.wheelbase
 ${CELL('車身號碼', ins.vin)}${CELL('引擎號碼', ins.engineNo)}${CELL('里程保證', ins.guarantee === 'yes' ? '☑ 保證　☐ 不保證' : ins.guarantee === 'no' ? '☐ 保證　☑ 不保證' : '☐ 保證　☐ 不保證')}</div>`;
   }
   if (k === 'equipment') return `<div class="p-sec"><h4>車 輛 配 備</h4><div class="p-list">${EQUIP.map(([id, n]) => { let t = n; const ex = EQUIP_EXTRA[id], fld = EQUIP_FIELD[id]; if (ex && ins.equip[id] && ins[fld]) t += `（${esc(ins[fld])}${ex.unit || ''}）`; return cb(!!ins.equip[id], t); }).join('')}</div></div>`;
-  if (k === 'checks') return `<div class="p-sec"><h4>機 能 件 檢 查</h4>${CHECK_GROUPS.map(([cat, items]) => `<div class="sm" style="font-weight:700;margin:3px 0 1px">${esc(cat)}</div><div class="p-list">${items.map(n => cb(!!ins.checks[n], n)).join('')}</div>`).join('')}</div>`;
+  if (k === 'checks') return `<div class="p-sec"><h4>機 能 件 檢 查</h4><div class="p-list">${flatChecks().map(n => cb(!!ins.checks[n], n)).join('')}</div></div>`;
   if (k === 'notes') return `<div class="p-sec"><h4>車 況 輔 助 註 記</h4><div class="p-notes">${ins.phrases.length ? ins.phrases.map(p => `<p>${esc(p)}。</p>`).join('') : '<p>無</p>'}</div></div>`;
   if (k === 'diagrams') return `<div class="p-diag">${['ext', 'str'].map(v => `<div><h4>${DIAG[v].split('').join(' ')}</h4><div class="p-mkw"><img src="${IMG[v]}" alt="">${mkHtml(ins, v, tpl)}</div></div>`).join('')}</div>`;
   if (k === 'summary') return `<div class="p-sum"><span>板金片數：<b>${countPanels(ins.marks)}</b> 片</span><span>輪胎更換數：<b>${ins.tireChange === '' ? '—' : esc(ins.tireChange)}</b> 條</span><span>查定士：<b>${esc(ins.inspectorName || uname(ins.inspectorId))}</b></span><span>${fmtDate(ins.doneAt || ins.updatedAt)}</span></div>`;
