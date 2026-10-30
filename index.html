@@ -279,6 +279,71 @@ a.btn{text-decoration:none;color:var(--ink)}
 a.btn.pri{color:#fff}
 .side-foot .btn{color:var(--ink)}
 
+
+@media(max-width:560px){
+  .inp,select.inp,textarea.inp{font-size:16px;min-height:46px}
+  .btn{min-height:44px}.btn.sm{min-height:38px}
+  .ck{min-height:48px}
+  .chip{min-height:40px}
+  .tabs button{padding:12px 16px}
+  .pal button{min-width:48px;height:48px}
+  .icon-btn{min-height:44px;min-width:44px}
+  .vbtn .lbl{display:none}
+  #who{display:none}
+  #top h2{font-size:16px}
+}
+
+/* ===== view mode switch (auto / mobile / desktop) ===== */
+.vbtn{padding:4px 10px;min-height:34px}
+.view-opts{display:grid;gap:10px}
+.view-opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1.5px solid var(--line2);background:#fff;border-radius:10px;padding:12px 14px;min-height:64px}
+.view-opt .ic{font-size:26px;width:34px;text-align:center;flex:none}
+.view-opt b{display:block}
+.view-opt small{display:block;color:var(--mute);line-height:1.35}
+.view-opt.on{border-color:var(--blue);background:var(--blue-s)}
+.view-opt .tag{margin-left:auto;flex:none}
+#side{transition:transform .22s ease,visibility 0s linear 0s}
+#app.collapsed #side{visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s}
+.login-switch{margin-top:4px}
+/* forced mobile layout: same rules as the narrow-screen media queries */
+html.mobile #login{grid-template-columns:1fr}
+html.mobile .login-art{display:none}
+html.mobile .login-form{padding:40px 24px}
+html.mobile .g4{grid-template-columns:repeat(2,1fr)}
+html.mobile .g3{grid-template-columns:repeat(2,1fr)}
+html.mobile .g6{grid-template-columns:repeat(3,1fr)}
+html.mobile .g3,html.mobile .g6{grid-template-columns:1fr 1fr}
+html.mobile .g2{grid-template-columns:1fr}
+html.mobile #main{margin-left:0}
+html.mobile #app:not(.collapsed) #backdrop{display:block}
+html.mobile #view{padding:12px}
+html.mobile .stats{grid-template-columns:1fr 1fr}
+html.mobile .two{grid-template-columns:1fr}
+html.mobile .cards{grid-template-columns:repeat(2,1fr)}
+html.mobile .cards{grid-template-columns:1fr}
+html.mobile .search{grid-template-columns:repeat(2,1fr)}
+html.mobile .diagrams{grid-template-columns:1fr}
+html.mobile .perm-g .grid{grid-template-columns:1fr 1fr}
+html.mobile .split{grid-template-columns:1fr}
+html.mobile .inp,html.mobile select.inp,html.mobile textarea.inp{font-size:16px;min-height:46px}
+html.mobile .btn{min-height:44px}
+html.mobile .btn.sm{min-height:38px}
+html.mobile .ck{min-height:48px}
+html.mobile .chip{min-height:40px}
+html.mobile .tabs button{padding:12px 16px}
+html.mobile .pal button{min-width:48px;height:48px}
+html.mobile .icon-btn{min-height:44px;min-width:44px}
+html.mobile .vbtn .lbl{display:none}
+html.mobile #who{display:none}
+html.mobile #top h2{font-size:16px}
+
+@media(min-width:600px){
+  html.mobile{background:#c9d1d9}
+  html.mobile body{max-width:430px;margin:0 auto;box-shadow:0 0 0 1px #aeb9c4,0 14px 50px rgba(16,26,36,.28)}
+  html.mobile #side{left:max(0px,calc((100vw - 430px)/2))}
+  html.mobile #backdrop,html.mobile .modal-bg,html.mobile .overlay{left:max(0px,calc((100vw - 430px)/2));right:max(0px,calc((100vw - 430px)/2));width:auto}
+}
+html .login-switch .vbtn .lbl{display:inline}
 </style>
 </head>
 <body>
@@ -572,8 +637,46 @@ function showLogin() {
       h('p', { class: 'muted', style: { margin: 0 } }, '請輸入帳號與密碼'),
       field('帳號', u), field('密碼', p), err,
       h('button', { class: 'btn pri', style: { justifyContent: 'center', minHeight: '46px' }, onclick: go }, '登入'),
-      h('p', { class: 'sm muted' }, '資料儲存在此裝置的瀏覽器中。')));
+      h('p', { class: 'sm muted' }, '資料儲存在此裝置的瀏覽器中。'), h('div', { class: 'login-switch' }, viewBtn())));
   u.focus();
+}
+
+
+/* ========== view mode (auto / mobile / desktop) ========== */
+let viewMem = 'auto';
+function getViewMode() { try { return localStorage.getItem('gy-view-mode') || viewMem; } catch (_) { return viewMem; } }
+const isNarrow = () => document.documentElement.classList.contains('mobile') || matchMedia('(max-width:900px)').matches;
+function paintViewBtn(b) {
+  const m = getViewMode(); b.innerHTML = '';
+  add(b, [h('span', null, m === 'mobile' ? '📱' : m === 'desktop' ? '💻' : '↔️'), h('span', { class: 'lbl' }, m === 'mobile' ? '手機版' : m === 'desktop' ? '電腦版' : '切換版面')]);
+}
+function viewBtn() { const b = h('button', { class: 'btn sm vbtn', type: 'button', title: '切換手機版／電腦版', onclick: openViewMenu }); paintViewBtn(b); return b; }
+function applyViewMode() {
+  const m = getViewMode(), html = document.documentElement;
+  html.classList.toggle('mobile', m === 'mobile'); html.classList.toggle('desktop', m === 'desktop');
+  const meta = document.querySelector('meta[name=viewport]');
+  const phone = Math.min(screen.width || 9999, screen.height || 9999) < 700;
+  if (meta) meta.setAttribute('content', m === 'desktop' && phone ? 'width=1280, viewport-fit=cover' : 'width=device-width, initial-scale=1, viewport-fit=cover');
+  const app = $('#app'); if (app && !app.classList.contains('hidden') && app.firstChild) app.classList.toggle('collapsed', isNarrow());
+  document.querySelectorAll('.vbtn').forEach(paintViewBtn);
+  window.dispatchEvent(new Event('resize'));
+}
+function setViewMode(m) {
+  viewMem = m; try { localStorage.setItem('gy-view-mode', m); } catch (_) { }
+  applyViewMode(); toast(m === 'mobile' ? '已切換為手機版' : m === 'desktop' ? '已切換為電腦版' : '已改為自動（依螢幕寬度）');
+}
+function openViewMenu() {
+  const now = getViewMode(); let close;
+  const opt = (m, ic, title, desc) => h('button', { type: 'button', class: 'view-opt' + (now === m ? ' on' : ''), onclick: () => { close(); setViewMode(m); } },
+    h('span', { class: 'ic' }, ic), h('span', null, h('b', null, title), h('small', null, desc)), now === m ? h('span', { class: 'tag blue' }, '使用中') : null);
+  close = modal({
+    title: '切換顯示版面',
+    body: h('div', { class: 'view-opts' },
+      opt('auto', '↔️', '自動', '依目前裝置的螢幕寬度自動調整（預設）'),
+      opt('mobile', '📱', '手機版', '單欄排版、較大的按鈕；在電腦上會以手機寬度置中顯示'),
+      opt('desktop', '💻', '電腦版', '左側選單與多欄排版；在手機上會縮小顯示完整畫面')),
+    buttons: [{ label: '關閉' }]
+  });
 }
 
 const NAV = [
@@ -590,7 +693,7 @@ const NAV = [
 function startApp() {
   const app = $('#app'); app.classList.remove('hidden');
   app.innerHTML = '';
-  const narrow = () => matchMedia('(max-width:900px)').matches;
+  const narrow = isNarrow;
   const closeIfNarrow = () => { if (narrow()) app.classList.add('collapsed'); };
   const nav = h('nav', { id: 'nav' }, NAV.filter(n => n[3]()).map(([r, l, ic]) => h('a', { href: '#/' + r, data: { r }, onclick: closeIfNarrow }, h('span', { class: 'ic' }, ic), l)));
   const side = h('aside', { id: 'side' },
@@ -601,7 +704,7 @@ function startApp() {
   const net = h('span', { class: 'tag ' + (navigator.onLine ? 'green' : 'red'), id: 'netStat', title: '資料儲存在本機，離線也能繼續查定' }, navigator.onLine ? '● 連線中' : '● 離線（資料存於本機）');
   window.addEventListener('online', () => { net.className = 'tag green'; net.textContent = '● 連線中'; });
   window.addEventListener('offline', () => { net.className = 'tag red'; net.textContent = '● 離線（資料存於本機）'; });
-  const top = h('header', { id: 'top' }, h('button', { class: 'icon-btn', id: 'burger', 'aria-label': '展開或收起選單', onclick: () => app.classList.toggle('collapsed') }, '☰'), h('h2', { id: 'ttl' }, ''), h('span', { class: 'spacer' }), net, h('span', { class: 'muted sm', id: 'who' }, cur.name));
+  const top = h('header', { id: 'top' }, h('button', { class: 'icon-btn', id: 'burger', 'aria-label': '展開或收起選單', onclick: () => app.classList.toggle('collapsed') }, '☰'), h('h2', { id: 'ttl' }, ''), h('span', { class: 'spacer' }), viewBtn(), net, h('span', { class: 'muted sm', id: 'who' }, cur.name));
   app.append(side, h('div', { id: 'backdrop', onclick: () => app.classList.add('collapsed') }), h('div', { id: 'main' }, top, h('main', { id: 'view' })));
   if (narrow()) app.classList.add('collapsed');
   if (!DB.ok) $('#view').before(h('div', { class: 'hint', style: { margin: '8px 20px' } }, '此瀏覽器無法使用本機資料庫，關閉頁面後資料會消失。'));
@@ -1707,6 +1810,7 @@ async function vSettings() {
 
 /* ========== boot ========== */
 (async function boot() {
+  applyViewMode();
   await loadAll();
   if (cur) { $('#login').classList.add('hidden'); startApp(); } else showLogin();
 })();
