@@ -163,7 +163,6 @@ textarea.inp{min-height:80px;resize:vertical}
 .mk.slot{width:calc(30px*var(--k,1));height:calc(30px*var(--k,1));min-width:22px;min-height:22px;border:1.5px dashed rgba(23,70,201,.55);border-radius:50%;padding:0;background:rgba(255,255,255,.55)}
 .mk.slot.sel{border-style:solid}
 .mk .t{display:inline-block}
-.mk .t.x-y{background:#ffe100;padding:0 .18em}
 .mk-tools{margin:8px 0}
 .pal{display:flex;flex-wrap:wrap;gap:6px}
 .pal button{min-width:44px;height:44px;border:1px solid var(--line2);background:#fff;border-radius:6px;font-family:var(--mark);font-weight:700;color:#1a47d1;font-size:22px;padding:0 8px}
@@ -227,32 +226,53 @@ textarea.inp{min-height:80px;resize:vertical}
 .pg-c{width:100%}
 .p-cell b{font-weight:700}
 .pdf-page .foot{position:absolute;left:11mm;right:11mm;bottom:5mm;display:flex;justify-content:space-between;font-size:10px;color:#555;border-top:1px solid #999;padding-top:3px}
-.p-title{text-align:center;font-size:22px;font-weight:700;letter-spacing:.5em;margin:0 0 6px}
-.p-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;min-height:28px}
-.p-head img{max-height:34px;max-width:110px}
-.p-head .cn{font-weight:700;font-size:14px}
-.p-hdrtxt{font-size:10px;color:#444;margin-left:auto}
-.p-box{border:1.5px solid #000;margin-bottom:4px}
-.p-box{overflow:hidden}
-.p-basic{display:grid;grid-template-columns:1fr 1fr 1fr 1.05fr}
-.p-cell{border-right:1px solid #000;border-bottom:1px solid #000;padding:3px 6px;min-height:36px;margin:0 -1px -1px 0}
-.p-cell small{display:block;font-size:10px;color:#333}
-.p-cell b{font-size:15px}
-.p-rate{text-align:center;padding:3px}
-.p-rate .big{font-size:calc(var(--rs,28)*1px);font-weight:700;line-height:1.15}
-.p-rate .lb{letter-spacing:.3em;font-weight:700;font-size:12px;border-bottom:1px solid #000;margin-bottom:2px}
-.p-sec{border:1.5px solid #000;margin-bottom:4px;padding:4px 6px}
-.p-sec h4{margin:0 0 3px;font-size:13px;letter-spacing:.2em}
-.p-list{display:grid;grid-template-columns:repeat(4,1fr);gap:1px 6px;font-size:11px}
-.p-list span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.p-notes{columns:2;column-gap:14px;font-size:12px}
-.p-notes p{margin:0 0 1px;break-inside:avoid}
-.p-diag{display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin-top:2px}
+.p-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-bottom:3px;min-height:14mm}
+.p-top .l img{max-height:14mm;max-width:42mm;display:block}
+.p-top .l .cn{font-weight:700;font-size:14px}
+.p-top .t{font-size:26px;font-weight:700;letter-spacing:.06em;text-align:center;white-space:nowrap}
+.p-top .r{text-align:right;font-size:10px;color:#444}
+.p-box{border:2px solid #000;margin-bottom:3px;overflow:hidden}
+.p-basic{display:grid;grid-template-columns:170fr 170fr 170fr 165fr;grid-template-rows:12mm 12mm 12mm 15mm 11mm;grid-template-areas:"plate brand model rate" "mfg cc drive rate" "shift doors wheel rate" "mile vin eng rate" "fuel guar guar rate"}
+.p-cell{border-right:1px solid #000;border-bottom:1px solid #000;padding:1px 5px;margin:0 -1px -1px 0;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.p-cell small{display:block;font-size:11px;line-height:1.2;color:#000}
+.p-cell b{font-weight:500;font-size:16px;line-height:1.25;color:#0b3fd0}
+.p-cell.r b{text-align:right}
+.p-cell .u{color:#000;font-weight:700;font-size:12px}
+.p-mile .v{color:#0b3fd0;font-size:16px}
+.p-mile .mu{text-align:right;font-weight:700;font-size:12px;line-height:1.1}
+.p-mile .mu.off{text-decoration:line-through;text-decoration-color:#c00;text-decoration-thickness:2px}
+.p-mile .mr{display:flex;justify-content:space-between;align-items:baseline}
+.p-fuel b{text-align:center}
+.p-guar .p-ck{font-size:calc(var(--pfs,11)*1.15px)}
+.p-guar{flex-direction:row;align-items:center;gap:6px;justify-content:center}
+.p-rate{display:flex;flex-direction:column;text-align:center;margin:0 -1px -1px 0;border-bottom:1px solid #000}
+.p-rate .rb{flex:1;display:flex;flex-direction:column;min-height:0}
+.p-rate .rb+.rb .lb{border-top:1px solid #000}
+.p-rate .lb{letter-spacing:.3em;font-weight:700;font-size:12px;border-bottom:1px solid #000;padding:1px 0}
+.p-rate .big{flex:1;display:flex;align-items:center;justify-content:center;font-size:calc(var(--rs,64)*1px);font-weight:700;color:#0b3fd0;line-height:1}
+.p-sec{border:2px solid #000;margin-bottom:3px;padding:3px 6px}
+.p-sec h4{margin:0 0 3px;font-size:13px;letter-spacing:.12em}
+.p-list5{display:grid;grid-template-columns:repeat(5,1fr);gap:1px 4px;font-size:calc(var(--pfs,11)*1.15px);line-height:1.5}
+.p-lab{font-weight:700;font-size:calc(var(--pfs,11)*1.45px);white-space:nowrap}
+.p-ck{white-space:nowrap;overflow:hidden}
+.p-ck em{color:#0b3fd0;font-style:normal}
+.cbx{display:inline-block;width:.95em;height:.95em;border:1.4px solid #000;box-sizing:border-box;vertical-align:-.12em;margin-right:2px;position:relative}
+.cbx.on::after{content:"";position:absolute;left:24%;top:-8%;width:30%;height:66%;border:solid #000;border-width:0 2.2px 2.2px 0;transform:rotate(42deg)}
+.p-notes2{display:grid;grid-template-columns:1.45fr 1fr;gap:0 3px}
+.p-notes2.one{grid-template-columns:1fr}
+.p-notes2 .nb{min-height:34mm;margin-bottom:3px}
+.p-notes2 .nt{color:#0b3fd0;font-size:calc(var(--pfs,11)*1.3px);line-height:1.6;word-break:break-all}
+.p-diag{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:2px}
+.p-diag .dg{text-align:center}
 .p-diag h4{text-align:center;letter-spacing:.4em;margin:0 0 2px;font-size:12px}
-.p-mkw{position:relative}
+.p-mkw{position:relative;margin:0 auto}
 .p-mkw img{display:block;width:100%}
 .p-mkw .mk{cursor:default;padding:0}
-.p-sum{display:flex;gap:24px;align-items:center;justify-content:space-between;font-size:14px;margin-top:5px;padding:2px 6px;border-top:1.5px solid #000}
+.p-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:6px;font-size:calc(var(--pfs,11)*1.25px)}
+.p-foot .fi{display:flex;align-items:flex-end;gap:6px}
+.p-foot .ul{display:inline-block;min-width:20mm;border-bottom:1.5px solid #000;text-align:center;color:#0b3fd0;font-size:20px;line-height:1.2}
+.p-foot .ul.wide{min-width:38mm}
+.p-foot .fn{white-space:nowrap}
 .p-photo-h{background:#eef1f4;padding:2px 8px;font-weight:700;font-size:12px;margin:6px 0 3px;border-left:4px solid #333;break-inside:avoid}
 .p-photos{display:grid;gap:4mm}
 .p-ph{border:1px solid #888;position:relative;overflow:hidden;background:#f6f7f8}
@@ -344,6 +364,41 @@ html.mobile #top h2{font-size:16px}
   html.mobile #backdrop,html.mobile .modal-bg,html.mobile .overlay{left:max(0px,calc((100vw - 430px)/2));right:max(0px,calc((100vw - 430px)/2));width:auto}
 }
 html .login-switch .vbtn .lbl{display:inline}
+
+.nb2{min-height:34mm}
+.nb2 .nt{color:#0b3fd0;font-size:calc(var(--pfs,11)*1.3px);line-height:1.6;word-break:break-all}
+.al-c .p-cell{align-items:center;text-align:center}
+.al-c .p-cell.r b{text-align:center}
+.al-c .p-mile .mr{justify-content:center;gap:10px}
+.al-c .p-mile .mu{text-align:center}
+.al-c .p-ck,.al-c .p-lab{text-align:center}
+.al-c .p-sec h4,.al-c .nb2 .nt{text-align:center}
+
+.mp-bg{position:fixed;inset:0;z-index:85;background:rgba(10,18,26,.18)}
+.mp-box{position:fixed;z-index:86;width:min(330px,calc(100vw - 20px));max-height:calc(100vh - 20px);overflow:auto;background:#fff;border:1px solid var(--line2);border-radius:12px;box-shadow:0 10px 36px rgba(0,0,0,.28);padding:12px}
+.mp-h{font-weight:700;font-size:14px;margin-bottom:6px}
+.mp-prev{min-height:54px;border:1px dashed var(--line2);border-radius:8px;padding:6px;margin-bottom:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mark);font-weight:700;font-size:24px;line-height:1.1;color:#1a47d1}
+.mp-ph{font-family:var(--font);font-weight:400;font-size:13px;color:var(--mute)}
+.mp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.mp-grid button{position:relative;height:44px;border:1px solid var(--line2);background:#fff;border-radius:8px;font-family:var(--mark);font-weight:700;color:#1a47d1;font-size:19px;padding:0}
+.mp-grid button.on{background:var(--blue-s);border-color:var(--blue)}
+.mp-grid button:disabled{opacity:.45}
+.mp-grid .bd{position:absolute;right:-4px;top:-6px;background:var(--blue);color:#fff;font:700 11px/16px var(--font);min-width:16px;height:16px;border-radius:8px;padding:0 3px;text-align:center}
+.mp-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center}
+@media(min-width:600px){html.mobile .mp-bg{left:max(0px,calc((100vw - 430px)/2));right:max(0px,calc((100vw - 430px)/2))}}
+
+.t.cir{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border:.09em solid currentColor;border-radius:50%;min-width:1.5em;height:1.5em;padding:0 .12em;margin:0 .05em;font-size:.78em;line-height:1;letter-spacing:-.05em}
+.stk{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+.stk path{fill:none;stroke:#ffe600;stroke-opacity:.8;stroke-linecap:round;stroke-linejoin:round}
+.mk-wrap.erasing .stk{pointer-events:auto}
+.mk-wrap.erasing .stk path{pointer-events:stroke;cursor:pointer}
+.mk-wrap.brushing{touch-action:none;cursor:crosshair}
+.mk-wrap.brushing .mk,.mk-wrap.erasing .mk{pointer-events:none}
+.brushbar{margin-bottom:8px}
+
+.fillcv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+.mk-wrap.filling{cursor:pointer}
+.mk-wrap.filling .mk{pointer-events:none}
 </style>
 </head>
 <body>
@@ -458,12 +513,15 @@ async function putPhoto(id, url) { photoCache.set(id, url); await DB.set('p:' + 
 async function delPhoto(id) { photoCache.delete(id); await DB.del('p:' + id); }
 
 /* ========== constants ========== */
-const MARKS = ['P', 'X', 'R', 'r', 'b', 'B', 'S', 'SS', 'H', 'T', '∆', '∆∆', 'F', 'Ⓟ', 'Ⓑ', 'ⓑ', 'Ⓢ'];
-const PANEL_MARKS = new Set(['Ⓟ', 'Ⓑ', 'ⓑ', 'Ⓢ', '∆', '∆∆', 'SS']);
+const MARKS = ['P', 'X', 'R', 'r', 'b', 'B', 'S', 'SS', 'H', 'T', '∆', '∆∆', 'F', 'Ⓟ', 'Ⓑ', 'ⓑ', 'Ⓢ', '(SS)', '(∆∆)', '(∆)'];
+const PANEL_MARKS = new Set(['Ⓟ', 'Ⓑ', 'ⓑ', 'Ⓢ', '∆', '∆∆', 'SS', '(SS)', '(∆∆)', '(∆)']);
 const normTok = t => t.replace(/[Δ△]/g, '∆');
-const toks = s => normTok(s || '').match(/∆∆|∆|SS|[\u24B6-\u24E9]|[A-Za-z]|[^\s]/g) || [];
+const toks = s => normTok(s || '').match(/\((?:SS|∆∆|∆)\)|∆∆|∆|SS|[\u24B6-\u24E9]|[A-Za-z]|[^\s]/g) || [];
+const CIR_RE = /^\((.+)\)$/;
+function tokSpan(t, view) { const c = CIR_RE.exec(t); return h('span', { class: 't' + (c ? ' cir' : '') }, c ? c[1] : t); }
+const tokHtml = (t, view) => { const c = CIR_RE.exec(t); return `<span class="t${c ? ' cir' : ''}">${esc(c ? c[1] : t)}</span>`; };
 let EQUIP = [['ikey', 'i-Key'], ['shift', '換檔撥片'], ['cruise', '定速系統'], ['around', '環景系統'], ['park', '自動停車'], ['tailgate', '電動尾門'], ['nav', '衛星導航'], ['lane', '車道偏移'], ['climate', '恆溫空調'], ['abs', 'ABS'], ['srs', 'SRS'], ['esc', '循跡防滑'], ['acc', 'ACC跟車'], ['eseat', '電動座椅'], ['blind', '盲點偵測'], ['sunroof', '天窗'], ['touch', '車門感應'], ['slide', '電滑門'], ['alloy', '鋁圈'], ['key', 'KEY']];
-const EQUIP_EXTRA = { srs: { type: 'count', unit: '顆' }, sunroof: { type: 'select', opts: ['1', '2', '全景'] }, alloy: { type: 'text', ph: '18吋' }, slide: { type: 'count', unit: '個' }, eseat: { type: 'text', ph: '2張／電動可調' }, key: { type: 'count', unit: '支' } };
+const EQUIP_EXTRA = { srs: { type: 'count', unit: '顆' }, sunroof: { type: 'select', opts: ['1', '2', '全景'] }, alloy: { type: 'text', ph: '18吋' }, slide: { type: 'count', unit: '個' }, eseat: { type: 'text', ph: '2張／電動可調' }, tailgate: { type: 'text', ph: '感應式' }, key: { type: 'count', unit: '支' } };
 let CHECK_GROUPS = [
   ['引擎系統', ['引擎滲漏油', '引擎外部異音', '引擎內部異音', '引擎水溫過高', '怠速不穩', '怠速抖動大', '機油油泥', '機油乳化', '引擎冒藍白煙', '機油量不足', '引擎燈異常', '渦輪漏油', '渦輪管路漏油']],
   ['變速箱系統', ['變速箱滲漏油', '變速箱油不足', '入檔抖動', '變速箱入檔鈍挫']],
@@ -531,8 +589,8 @@ function slotMarks() { const m = []; for (const v of ['ext', 'str']) for (const 
 const ALL_SECTIONS = [['header', '頁首（Logo／公司名稱）'], ['basic', '車輛基本資料與評價'], ['equipment', '車輛配備'], ['checks', '機能件檢查'], ['notes', '車況輔助註記'], ['diagrams', '車身外觀／車體結構圖'], ['summary', '板金／輪胎／查定師'], ['photos', '照片'], ['internal', '內部資訊（派工、自動判定紀錄）']];
 function mkTpl(name, desc, on, extra = {}) {
   return Object.assign({
-    id: uid(), name, desc, isDefault: false, builtin: true, company: '高雄冠宥汽車', logo: '', title: '車 輛 鑑 定 表', font: 'var(--font)', fontSize: 11, markSize: 20, ratingSize: 28,
-    photoCols: 3, pageNo: true, headerText: '', footerText: '',
+    id: uid(), name, desc, isDefault: false, builtin: true, company: '高雄冠宥汽車', logo: '', title: '車 輛 鑑 定 表', font: 'var(--font)', fontSize: 11, markSize: 20, ratingSize: 64,
+    photoCols: 3, pageNo: true, headerText: '', footerText: '', inspectorLabel: '查定士', hotline: '', align: 'center', diagH: 80,
     sections: ALL_SECTIONS.map(([k]) => ({ key: k, on: on.includes(k) }))
   }, extra);
 }
@@ -580,6 +638,8 @@ async function loadAll() {
   if (S.settings.equipList) EQUIP = S.settings.equipList; else { S.settings.equipList = EQUIP; dirty = true; }
   if (S.settings.checkGroups) CHECK_GROUPS = S.settings.checkGroups; else { S.settings.checkGroups = CHECK_GROUPS; dirty = true; }
   if (S.settings.photoCats) CATS = S.settings.photoCats; else { S.settings.photoCats = CATS; dirty = true; }
+  if (!S.settings.pdfV4) { S.pdfTpls.forEach(t => { if (t.fontSize === 12) t.fontSize = 11; if (!t.align) t.align = 'center'; }); S.settings.pdfV4 = true; dirty = true; }
+  if (!S.settings.pdfV2) { S.pdfTpls.forEach(t => { if ((t.ratingSize || 0) <= 28) t.ratingSize = 64; if (t.inspectorLabel == null) t.inspectorLabel = '查定士'; if (t.hotline == null) t.hotline = ''; if (t.diagH == null) t.diagH = 80; }); S.settings.pdfV2 = true; dirty = true; }
   if (dirty) for (const k of Object.keys(S)) await saveNow(k);
   const sid = await DB.get('session'); if (sid) { const u = S.users.find(x => x.id === sid && x.status === 'active'); if (u) cur = u; }
 }
@@ -831,15 +891,94 @@ const cloneMarks = ms => ms.map(m => ({ ...m, id: uid() }));
 const countPanels = ms => ms.filter(m => m.view === 'ext').reduce((n, m) => n + toks(m.text).filter(t => PANEL_MARKS.has(t)).length, 0);
 const FONTS = ['Arial', 'Noto Sans TC', 'Times New Roman', 'Courier New'];
 
+const FILL_URL = {};
+function dilateCross(a, w, h, n) {
+  for (let k = 0; k < n; k++) {
+    const b = a.slice();
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const p = y * w + x; if (a[p]) { if (x > 0) b[p - 1] = 1; if (x < w - 1) b[p + 1] = 1; if (y > 0) b[p - w] = 1; if (y < h - 1) b[p + w] = 1; } }
+    a = b;
+  }
+  return a;
+}
+let maskPromise = null;
+function getMask() {
+  if (!maskPromise) maskPromise = new Promise((res, rej) => {
+    const im = new Image();
+    im.onload = () => {
+      const w = im.naturalWidth, h = im.naturalHeight, c = document.createElement('canvas'); c.width = w; c.height = h;
+      const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0);
+      const d = g.getImageData(0, 0, w, h).data; let line = new Uint8Array(w * h);
+      for (let p = 0, i = 0; p < line.length; p++, i += 4) { const r = d[i], gg = d[i + 1], b = d[i + 2]; const lum = 0.299 * r + 0.587 * gg + 0.114 * b, sat = Math.max(r, gg, b) - Math.min(r, gg, b); line[p] = (lum < 215 || sat > 60) ? 1 : 0; }
+      res({ w, h, line: dilateCross(line, w, h, 2), cache: new Map() });
+    };
+    im.onerror = rej; im.src = IMG.str;
+  });
+  return maskPromise;
+}
+/* region (closed area between the drawn lines) containing a normalized point; {pix,id} or {err} */
+function fillRegion(M, f) {
+  const { w, h, line } = M;
+  const sx = Math.round(f.x * (w - 1)), sy = Math.round(f.y * (h - 1)), key = sx + ',' + sy;
+  if (M.cache.has(key)) return M.cache.get(key);
+  let p0 = sy * w + sx, out;
+  if (line[p0]) {
+    let found = -1;
+    for (let r = 1; r <= 6 && found < 0; r++) for (let dy = -r; dy <= r && found < 0; dy++) for (let dx = -r; dx <= r; dx++) {
+      if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue; const x = sx + dx, y = sy + dy;
+      if (x < 0 || y < 0 || x >= w || y >= h) continue; if (!line[y * w + x]) { found = y * w + x; break; }
+    }
+    if (found < 0) { out = { err: 'line' }; M.cache.set(key, out); return out; } p0 = found;
+  }
+  const seen = new Uint8Array(w * h), stack = [p0], pix = []; seen[p0] = 1; let border = 0, minId = p0;
+  while (stack.length) {
+    const p = stack.pop(); pix.push(p); if (p < minId) minId = p;
+    const x = p % w, y = (p / w) | 0; if (x === 0 || y === 0 || x === w - 1 || y === h - 1) border++;
+    if (pix.length > w * h * 0.2) break;
+    if (x > 0 && !line[p - 1] && !seen[p - 1]) { seen[p - 1] = 1; stack.push(p - 1); }
+    if (x < w - 1 && !line[p + 1] && !seen[p + 1]) { seen[p + 1] = 1; stack.push(p + 1); }
+    if (y > 0 && !line[p - w] && !seen[p - w]) { seen[p - w] = 1; stack.push(p - w); }
+    if (y < h - 1 && !line[p + w] && !seen[p + w]) { seen[p + w] = 1; stack.push(p + w); }
+  }
+  out = pix.length > w * h * 0.2 || border > 200 ? { err: 'bg' } : pix.length < 40 ? { err: 'small' } : { pix, id: minId };
+  M.cache.set(key, out); return out;
+}
+async function paintFills(cv, list) {
+  const tok = cv._tok = (cv._tok || 0) + 1;
+  const M = await getMask(); if (cv._tok !== tok) return;
+  cv.width = M.w; cv.height = M.h; const g = cv.getContext('2d'); g.clearRect(0, 0, M.w, M.h);
+  if (!list.length) return;
+  let cov = new Uint8Array(M.w * M.h);
+  for (const f of list) { const r = fillRegion(M, f); if (r.pix) for (const p of r.pix) cov[p] = 1; }
+  cov = dilateCross(cov, M.w, M.h, 2);
+  const img = g.createImageData(M.w, M.h), d = img.data;
+  for (let p = 0; p < cov.length; p++) if (cov[p]) { const i = p * 4; d[i] = 255; d[i + 1] = 230; d[i + 2] = 0; d[i + 3] = 205; }
+  g.putImageData(img, 0, 0);
+}
+async function prepareFills(ins) {
+  const list = (ins.fills || []).filter(f => f.view === 'str');
+  if (!list.length) { delete FILL_URL[ins.id]; return; }
+  const cv = document.createElement('canvas'); await paintFills(cv, list); FILL_URL[ins.id] = cv.toDataURL('image/png');
+}
+const fillImg = (ins, view) => view === 'str' && FILL_URL[ins.id] ? `<img class="stk" src="${FILL_URL[ins.id]}" alt="">` : '';
+function markBackspace(t) {
+  if (!t) return '';
+  if (t.endsWith('\n')) return t.slice(0, -1);
+  const lines = t.split('\n'); const last = toks(lines.pop()); last.pop();
+  if (last.length) lines.push(last.join(' '));
+  return lines.join('\n');
+}
 function markPanel(initMarks, o) {
-  let marks = initMarks, tool = null, sel = null;
+  let marks = initMarks, tool = null, sel = null, mode = 'mark', brushW = 28;
   const views = o.views || ['ext', 'str'];
+  const strokes = o.strokes || null, fills = o.fills || null;
   const root = h('div');
   const pal = h('div', { class: 'pal' }), hint = h('div', { class: 'hint' }), selbar = h('div', { class: 'selbar hidden' });
-  const wraps = {};
+  const wraps = {}, svgs = {}, fillCv = {};
   const diagrams = h('div', { class: 'diagrams' + (views.length === 1 ? ' one' : '') }, views.map(v => {
     const w = h('div', { class: 'mk-wrap', data: { v } }, h('img', { src: IMG[v], alt: DIAG[v], draggable: false }));
     wraps[v] = w;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'stk'); svg.setAttribute('viewBox', `0 0 1000 ${Math.round(1000 * IMG_RATIO[v])}`); if (o.fills && v === 'str') { const cv = document.createElement('canvas'); cv.className = 'fillcv'; w.append(cv); fillCv[v] = cv; }
+    w.append(svg); svgs[v] = svg;
     if ('ResizeObserver' in window) new ResizeObserver(() => w.style.setProperty('--k', (w.clientWidth / 520).toFixed(3))).observe(w);
     return h('div', { class: 'dg' }, h('h3', null, DIAG[v]), w);
   }));
@@ -850,7 +989,7 @@ function markPanel(initMarks, o) {
     const slot = !m.text;
     const e = h('div', { class: 'mk' + (slot ? ' slot' : '') + (m.locked ? ' lock' : '') + (sel === m.id ? ' sel' : ''), data: { id: m.id }, style: { left: m.x * 100 + '%', top: m.y * 100 + '%', color: m.color || '', fontFamily: `${m.font || 'Arial'},var(--mark)`, '--sz': m.size || 26 } });
     if (slot) { if (m.label) e.title = m.label; }
-    else m.text.split('\n').forEach(line => { const row = h('div', { class: 'mk-line' }); toks(line).forEach(t => row.append(h('span', { class: 't' + (m.view === 'str' && t === 'X' ? ' x-y' : '') }, t))); e.append(row); });
+    else m.text.split('\n').forEach(line => { const row = h('div', { class: 'mk-line' }); toks(line).forEach(t => row.append(tokSpan(t, m.view))); e.append(row); });
     if (!o.ro) bindMk(e, m);
     return e;
   }
@@ -867,7 +1006,8 @@ function markPanel(initMarks, o) {
       };
       const up = () => {
         e.removeEventListener('pointermove', mv); e.removeEventListener('pointerup', up); e.removeEventListener('pointercancel', up);
-        if (moved) { sel = m.id; tool = null; commit(); render(); }
+        if (moved) { if (!o.slotMode) commit(); else { sel = m.id; tool = null; commit(); render(); } }
+        else if (!o.slotMode) openPicker(m, m.view, m.x, m.y, sx, sy);
         else { tool = null; sel = sel === m.id ? null : m.id; render(); }
       };
       e.addEventListener('pointermove', mv); e.addEventListener('pointerup', up); e.addEventListener('pointercancel', up);
@@ -878,10 +1018,46 @@ function markPanel(initMarks, o) {
       wraps[v].querySelectorAll('.mk').forEach(n => n.remove());
       marks.filter(m => m.view === v).forEach(m => wraps[v].append(mkEl(m)));
       wraps[v].classList.toggle('armed', !!tool && !o.ro);
+      wraps[v].classList.toggle('brushing', mode === 'brush' && !o.ro); wraps[v].classList.toggle('erasing', mode === 'erase' && !o.ro); wraps[v].classList.toggle('filling', mode === 'fill' && !o.ro);
     }
   }
+  function renderFills() { for (const v in fillCv) paintFills(fillCv[v], (fills || []).filter(f => f.view === v)); }
+  async function hlTap(view, nx, ny, m) {
+    if (view !== 'str' || !fills) return;
+    if (!can(m === 'fill' ? 'mark.add' : 'mark.delete')) return toast('沒有修改的權限', true);
+    const M = await getMask(), probe = fillRegion(M, { x: nx, y: ny });
+    if (probe.err) { if (m === 'fill') toast(probe.err === 'bg' ? '這裡是圖外的空白處' : probe.err === 'small' ? '這個區塊太小，請改用 🖍 螢光筆手畫' : '請點在區塊裡面，不要點在線上', true); return; }
+    const same = fills.filter(f => { const r = fillRegion(M, f); return r.pix && r.id === probe.id; });
+    if (same.length) same.forEach(f => fills.splice(fills.indexOf(f), 1));
+    else if (m === 'fill') fills.push({ id: uid(), view, x: nx, y: ny, t: Date.now() });
+    else return;
+    renderFills(); o.onChange && o.onChange(marks);
+  }
+  function renderStrokes() {
+    for (const v in svgs) {
+      const H = Math.round(1000 * IMG_RATIO[v]);
+      svgs[v].innerHTML = (strokes || []).filter(s => s.view === v).map(s => `<path data-id="${s.id}" style="stroke-width:${s.w}" d="M${s.pts.map(p => (p[0] * 1000).toFixed(1) + ' ' + (p[1] * H).toFixed(1)).join(' L')}"/>`).join('');
+    }
+  }
+  const brushBar = h('div', { class: 'pal brushbar' });
+  function drawBrushBar() {
+    brushBar.innerHTML = ''; if (!o.brush || o.ro) { brushBar.classList.add('hidden'); return; } brushBar.classList.remove('hidden');
+    const modeBtn = (m, label) => h('button', { type: 'button', class: 'tool' + (mode === m ? ' on' : ''), onclick: () => { mode = m; tool = null; sel = null; render(); } }, label);
+    add(brushBar, [modeBtn('mark', '👆 點選標記'), modeBtn('fill', '🪣 自動填色'), modeBtn('brush', '🖍 手畫螢光筆'), modeBtn('erase', '🧽 橡皮擦'),
+      mode === 'brush' ? [['細', 16], ['中', 28], ['粗', 44]].map(([l, n]) => h('button', { type: 'button', class: 'tool' + (brushW === n ? ' on' : ''), onclick: () => { brushW = n; render(); } }, '筆寬 ' + l)) : null,
+      h('button', { type: 'button', class: 'tool', onclick: () => {
+        const ls = strokes[strokes.length - 1], lf = fills && fills[fills.length - 1]; if (!ls && !lf) return;
+        if (!can('mark.add')) return toast('沒有修改的權限', true);
+        if (lf && (!ls || (lf.t || 0) >= (ls.t || 0))) fills.pop(); else strokes.pop();
+        renderStrokes(); renderFills(); o.onChange && o.onChange(marks);
+      } }, '↶ 復原'),
+      h('button', { type: 'button', class: 'tool', onclick: async () => {
+        if (!strokes.length && !(fills && fills.length)) return; if (!can('mark.delete')) return toast('沒有刪除的權限', true);
+        if (await confirmBox('清除所有黃色標示（螢光筆與填色）？', '清除', true)) { strokes.length = 0; if (fills) fills.length = 0; renderStrokes(); renderFills(); o.onChange && o.onChange(marks); }
+      } }, '清除黃色')]);
+  }
   function drawPal() {
-    pal.innerHTML = ''; if (o.ro) return;
+    pal.innerHTML = ''; if (o.ro || !o.slotMode) return;
     add(pal, [h('button', { type: 'button', class: 'tool' + (!tool ? ' on' : ''), onclick: () => { tool = null; sel = null; render(); } }, '✋ 選取／移動'),
     o.slotMode ? h('button', { type: 'button', class: 'tool' + (tool === 'slot' ? ' on' : ''), onclick: () => { tool = tool === 'slot' ? null : 'slot'; sel = null; render(); } }, '＋ 新增位置點')
       : [MARKS.map(t => h('button', { type: 'button', class: tool === t ? 'on' : '', 'aria-label': '標記 ' + t, onclick: () => palClick(t) }, t)),
@@ -903,6 +1079,7 @@ function markPanel(initMarks, o) {
   }
   function drawHint() {
     if (o.ro) { hint.classList.add('hidden'); return; } hint.classList.remove('hidden');
+    if (!o.slotMode) { hint.textContent = mode === 'brush' ? '用手指或滑鼠在圖上拖曳，畫出黃色螢光筆；畫完切回「點選標記」可加上 X 等符號。' : mode === 'fill' ? '點一下圖上的區塊，系統會沿著線條自動填滿黃色；再點一次取消。' : mode === 'erase' ? '點選要刪除的螢光筆筆跡，或點已填色的區塊來取消。' : '點圖片上的位置，會跳出小視窗讓你選標記；點已有的標記可修改或刪除；拖曳標記可移動位置。'; return; }
     const m = sel && find(sel);
     hint.textContent = m ? `已選取「${(m.text || '').replace(/\n/g, ' / ') || m.label || '空位'}」：點上方符號可疊加，「⏎ 換行」可另起一行，拖曳可移動。` :
       tool === 'slot' ? '點選圖面新增預設位置點。' : tool ? `已選「${tool}」：點選圖面放置標記。` :
@@ -926,9 +1103,82 @@ function markPanel(initMarks, o) {
       can('mark.delete') && h('button', { class: 'btn sm dng', type: 'button', onclick: () => { marks.splice(marks.indexOf(m), 1); sel = null; commit(true); } }, '刪除'),
       h('button', { class: 'btn sm', type: 'button', onclick: () => { sel = null; render(); } }, '取消選取')]);
   }
-  function render() { drawPal(); renderMarks(); drawHint(); drawSel(); }
+  function openPicker(m, view, nx, ny, cx, cy) {
+    if (o.ro) return;
+    const isNew = !m;
+    const draft = { text: m ? (m.text || '') : '', size: m ? (m.size || 26) : 26, color: m ? (m.color || '#1a47d1') : '#1a47d1', locked: m ? !!m.locked : false };
+    const perm = isNew ? can('mark.add') : (can('mark.edit') || can('mark.add'));
+    const canEdit = () => perm && !draft.locked;
+    const t0 = Date.now();
+    const bg = h('div', { class: 'mp-bg' });
+    const prev = h('div', { class: 'mp-prev' }), grid = h('div', { class: 'mp-grid' });
+    const close = () => { bg.remove(); box.remove(); document.removeEventListener('keydown', onKey); };
+    const onKey = e => { if (e.key === 'Escape') close(); };
+    bg.addEventListener('click', () => { if (Date.now() - t0 > 250) close(); });
+    document.addEventListener('keydown', onKey);
+    function paint() {
+      prev.innerHTML = ''; prev.style.color = draft.color;
+      if (!draft.text.trim()) prev.append(h('span', { class: 'mp-ph' }, canEdit() ? '點下方符號加入標記' : '（空）'));
+      else draft.text.split('\n').forEach(line => { const row = h('div', { class: 'mk-line' }); toks(line).forEach(t => row.append(tokSpan(t, view))); prev.append(row); });
+      const cnt = {}; toks(draft.text).forEach(t => cnt[t] = (cnt[t] || 0) + 1);
+      grid.querySelectorAll('button[data-s]').forEach(b => { const n = cnt[b.dataset.s] || 0; b.disabled = !canEdit(); b.classList.toggle('on', n > 0); const old = b.querySelector('.bd'); if (old) old.remove(); if (n > 0) b.append(h('span', { class: 'bd' }, n)); });
+    }
+    MARKS.forEach(t => grid.append(h('button', { type: 'button', data: { s: t }, 'aria-label': '標記 ' + t, onclick: () => { if (!canEdit()) return; draft.text = draft.text ? (draft.text.endsWith('\n') ? draft.text : draft.text + ' ') + t : t; paint(); } }, tokSpan(t, 'ext'))));
+    const rowEdit = h('div', { class: 'mp-row' },
+      h('button', { type: 'button', class: 'btn sm', onclick: () => { if (canEdit() && draft.text && !draft.text.endsWith('\n')) { draft.text += '\n'; paint(); } } }, '⏎ 換行'),
+      h('button', { type: 'button', class: 'btn sm', onclick: () => { if (canEdit()) { draft.text = markBackspace(draft.text); paint(); } } }, '⌫ 退一格'),
+      h('button', { type: 'button', class: 'btn sm', onclick: () => { if (canEdit()) { draft.text = ''; paint(); } } }, '清除'));
+    const rowStyle = h('div', { class: 'mp-row' }, h('span', { class: 'sm muted' }, '大小'),
+      h('input', { class: 'inp', type: 'number', min: 12, max: 80, value: draft.size, style: { width: '64px', minHeight: '34px' }, onchange: e => { draft.size = Math.max(12, Math.min(80, +e.target.value || 26)); e.target.value = draft.size; } }),
+      h('input', { type: 'color', value: draft.color, style: { width: '38px', height: '34px', border: '1px solid var(--line2)', borderRadius: '6px', padding: 2 }, oninput: e => { draft.color = e.target.value; paint(); } }),
+      !isNew && can('mark.edit') ? h('label', { class: 'row', style: { gap: '4px', marginLeft: 'auto' } }, h('input', { type: 'checkbox', checked: draft.locked, onchange: e => { draft.locked = e.target.checked; paint(); } }), '鎖定') : null);
+    function ok() {
+      const text = draft.text.replace(/\s+$/, '');
+      if (isNew) { if (text && perm) marks.push({ id: uid(), view, x: nx, y: ny, text, size: draft.size, color: draft.color, font: 'Arial', locked: false }); }
+      else {
+        if (can('mark.edit')) m.locked = draft.locked;
+        if (perm && !draft.locked) { m.size = draft.size; m.color = draft.color; if (text) m.text = text; else if (m.label !== undefined) m.text = ''; else marks.splice(marks.indexOf(m), 1); }
+      }
+      commit(); close();
+    }
+    const acts = h('div', { class: 'mp-row', style: { marginTop: '10px' } },
+      !isNew && can('mark.delete') ? h('button', { type: 'button', class: 'btn sm dng', onclick: () => { if (m.locked) return toast('此標記已鎖定，請先解鎖', true); marks.splice(marks.indexOf(m), 1); commit(); close(); } }, '刪除') : null,
+      h('span', { class: 'spacer' }), h('button', { type: 'button', class: 'btn sm', onclick: close }, '取消'), h('button', { type: 'button', class: 'btn sm pri', onclick: ok }, '確定'));
+    const box = h('div', { class: 'mp-box', role: 'dialog', 'aria-label': DIAG[view] + '標記', onclick: e => e.stopPropagation() },
+      h('div', { class: 'mp-h' }, DIAG[view] + (isNew ? '：新增標記' : '：修改標記')), prev, grid, rowEdit, rowStyle, acts);
+    document.body.append(bg, box); paint();
+    const bw = box.offsetWidth, bh = box.offsetHeight;
+    const left = Math.min(Math.max(10, cx - bw / 2), innerWidth - bw - 10);
+    let top = cy + 22; if (top + bh > innerHeight - 10) top = Math.max(10, cy - bh - 22);
+    box.style.left = left + 'px'; box.style.top = top + 'px';
+  }
+  function render() { drawBrushBar(); drawPal(); renderMarks(); renderStrokes(); renderFills(); drawHint(); drawSel(); }
+  if (o.brush && !o.ro) Object.entries(wraps).forEach(([v, w]) => {
+    let cur = null, r = null;
+    const pt = ev => [clamp01((ev.clientX - r.left) / r.width), clamp01((ev.clientY - r.top) / r.height)];
+    w.addEventListener('pointerdown', ev => {
+      if (mode !== 'brush') return;
+      if (!can('mark.add')) return toast('沒有新增標記的權限', true);
+      ev.preventDefault(); r = w.getBoundingClientRect(); try { w.setPointerCapture(ev.pointerId); } catch (_) { }
+      cur = { id: uid(), view: v, w: brushW, t: Date.now(), pts: [pt(ev)] }; strokes.push(cur); renderStrokes();
+    });
+    w.addEventListener('pointermove', ev => {
+      if (!cur) return; const p = pt(ev), l = cur.pts[cur.pts.length - 1];
+      if (Math.hypot(p[0] - l[0], (p[1] - l[1]) * IMG_RATIO[v]) < 0.004) return; cur.pts.push(p); renderStrokes();
+    });
+    const end = () => { if (!cur) return; if (cur.pts.length === 1) cur.pts.push(cur.pts[0].slice()); cur = null; renderStrokes(); o.onChange && o.onChange(marks); };
+    w.addEventListener('pointerup', end); w.addEventListener('pointercancel', end);
+  });
+  Object.values(svgs).forEach(svg => svg.addEventListener('click', e => {
+    if (mode !== 'erase' || !strokes) return; const el = e.target.closest('path'); if (!el) return;
+    if (!can('mark.delete')) return toast('沒有刪除的權限', true);
+    const i = strokes.findIndex(x => x.id === el.dataset.id); if (i >= 0) { strokes.splice(i, 1); renderStrokes(); o.onChange && o.onChange(marks); }
+  }));
   Object.values(wraps).forEach(w => w.addEventListener('click', e => {
     if (o.ro || e.target.closest('.mk')) return;
+    if (mode === 'fill' || mode === 'erase') { if (mode === 'erase' && e.target.closest('path')) return; const r1 = w.getBoundingClientRect(); hlTap(w.dataset.v, clamp01((e.clientX - r1.left) / r1.width), clamp01((e.clientY - r1.top) / r1.height), mode); return; }
+    if (mode !== 'mark') return;
+    if (!o.slotMode) { if (!can('mark.add')) return toast('沒有新增標記的權限', true); const r0 = w.getBoundingClientRect(); openPicker(null, w.dataset.v, clamp01((e.clientX - r0.left) / r0.width), clamp01((e.clientY - r0.top) / r0.height), e.clientX, e.clientY); return; }
     if (!tool) { if (sel) { sel = null; render(); } return; }
     if (!can('mark.add')) return toast('沒有新增標記的權限', true);
     const r = w.getBoundingClientRect();
@@ -936,7 +1186,7 @@ function markPanel(initMarks, o) {
     if (tool === 'slot') { m.label = ''; sel = m.id; }
     marks.push(m); commit(true); if (tool === 'slot') render();
   }));
-  root.append(pal, hint, selbar, diagrams); render();
+  root.append(brushBar, pal, hint, selbar, diagrams); render();
   root.api = { render, setMarks(a) { marks = a; sel = null; tool = null; render(); } };
   return root;
 }
@@ -947,7 +1197,7 @@ function newInspection(init = {}) {
   return Object.assign({
     id: uid(), dispatchId: null, plate: '', brandId: '', brand: '', modelId: '', model: '', year: '', month: '', cc: '', drive: '', doors: '', wheelbase: '', tires: '4',
     mileage: '', mileageUnit: S.settings.mileageUnit || 'KM', guarantee: '', vin: '', engineNo: '', bodyRating: '', interiorRating: '',
-    equip: {}, srsCount: '', sunroof: '', alloy: '', slideCount: '', eseatInfo: '', keyCount: '', checks: {}, phrases: [], marks: t ? cloneMarks(t.marks) : [], tireChange: '', photos: [],
+    equip: {}, srsCount: '', sunroof: '', alloy: '', slideCount: '', eseatInfo: '', keyCount: '', tailgateInfo: '', fuel: '', shift: '', strokes: [], fills: [], checks: {}, phrases: [], marks: t ? cloneMarks(t.marks) : [], tireChange: '', photos: [],
     inspectorId: cur.id, inspectorName: cur.name, status: 'draft', createdAt: Date.now(), updatedAt: Date.now(), autoLog: [], autoTrigger: null, autoValue: null, bodyTplId: t?.id || null
   }, init);
 }
@@ -1040,6 +1290,8 @@ function tabBasic(ctx) {
     field('出廠年月', h('div', { class: 'inline' }, D(selectEl(years, ins.year, v => { ins.year = v; touch(); }, '年')), D(selectEl(Array.from({ length: 12 }, (_, i) => String(i + 1)), ins.month, v => { ins.month = v; touch(); }, '月')))),
     field('排氣量', h('div', { class: 'inline' }, inp('cc', { type: 'number', mode: 'numeric' }), h('span', { class: 'muted' }, 'CC'))),
     field('傳動', sel('drive', ['2WD', '4WD'])),
+    field('排檔', sel('shift', ['手排', '自排', '手自排', '自手排'])),
+    field('燃油', sel('fuel', FUELS)),
     field('車門數', sel('doors', ['2門', '3門', '4門', '5門', '其他'])),
     field('長短軸', sel('wheelbase', ['短軸', '長軸', '超長軸'])),
     field('輪胎數', sel('tires', ['4', '6', '8', '10'], null)),
@@ -1053,7 +1305,7 @@ function tabBasic(ctx) {
     field('查定師（自動帶入）', h('input', { class: 'inp', value: ins.inspectorName || cur.name, disabled: true })))));
 }
 
-const EQUIP_FIELD = { srs: 'srsCount', sunroof: 'sunroof', alloy: 'alloy', slide: 'slideCount', eseat: 'eseatInfo', key: 'keyCount' };
+const EQUIP_FIELD = { srs: 'srsCount', sunroof: 'sunroof', alloy: 'alloy', slide: 'slideCount', eseat: 'eseatInfo', tailgate: 'tailgateInfo', key: 'keyCount' };
 function tabEquip(ctx) {
   const { ins, ro, touch } = ctx;
   const grid = h('div', { class: 'grid g4' });
@@ -1074,30 +1326,27 @@ function tabEquip(ctx) {
   return h('div', null, quickPhotoBar(ctx, '其他', '配備照片', ctx.photosIdx), h('div', { class: 'panel' }, h('h3', null, '車輛配備（勾選有配備的項目）'), grid));
 }
 
-function quickPhotoBar(ctx, defaultCat, label, photosTabIdx) {
+function quickPhotoBar(ctx, autoCat, label, photosTabIdx) {
   const { ins, ro, touch, go } = ctx;
-  let cat = defaultCat;
-  const catSel = selectEl(CATS, cat, v => { cat = v; refreshStrip(); }, null, 'inp'); catSel.style.cssText = 'width:120px;min-height:34px';
   const countSpan = h('span', { class: 'sm muted' });
-  const strip = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', marginTop: '8px' } });
-  function catList() { return ins.photos.filter(p => p.cat === cat); }
+  const strip = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'nowrap', marginTop: '8px', overflowX: 'auto', paddingBottom: '2px' } });
   function refreshStrip() {
-    strip.innerHTML = ''; const list = catList(); countSpan.textContent = `（${cat} 共 ${list.length} 張）`;
-    list.forEach(p => {
-      const im = h('img', { style: { width: '54px', height: '42px', objectFit: 'cover', borderRadius: '4px', cursor: 'pointer', border: '1px solid var(--line2)' }, alt: cat });
+    strip.innerHTML = ''; const list = ins.photos; countSpan.textContent = `（共 ${list.length} 張）`;
+    list.forEach((p, i) => {
+      const im = h('img', { style: { width: '54px', height: '42px', objectFit: 'cover', borderRadius: '4px', cursor: 'pointer', border: '1px solid var(--line2)', flex: 'none' }, alt: '' });
       getPhoto(p.id).then(u => im.src = u || '');
-      im.addEventListener('click', () => openViewer(ins, catList(), catList().indexOf(p), { ro, touch, refresh: refreshStrip }));
+      im.addEventListener('click', () => openViewer(ins, ins.photos.slice(), i, { ro, touch, refresh: refreshStrip }));
       strip.append(im);
     });
-    if (!list.length) strip.append(h('span', { class: 'sm muted' }, '此分類尚無照片'));
+    if (!list.length) strip.append(h('span', { class: 'sm muted' }, '還沒有照片'));
   }
-  const addPhoto = async (url, c) => { const id = uid(); await putPhoto(id, url); ins.photos.push({ id, cat: c, ts: Date.now() }); touch(); refreshStrip(); };
-  const camIn = h('input', { type: 'file', accept: 'image/*', capture: 'environment', class: 'hidden', onchange: async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; await addPhoto(await compressFile(f), cat); } });
-  const upIn = h('input', { type: 'file', accept: 'image/*', multiple: true, class: 'hidden', onchange: async e => { const fs = [...e.target.files]; e.target.value = ''; for (const f of fs) { try { await addPhoto(await compressFile(f), cat); } catch (_) { } } } });
+  const addPhoto = async url => { const id = uid(); await putPhoto(id, url); ins.photos.push({ id, cat: autoCat || '其他', ts: Date.now() }); touch(); refreshStrip(); };
+  const camIn = h('input', { type: 'file', accept: 'image/*', capture: 'environment', class: 'hidden', onchange: async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; await addPhoto(await compressFile(f)); } });
+  const upIn = h('input', { type: 'file', accept: 'image/*', multiple: true, class: 'hidden', onchange: async e => { const fs = [...e.target.files]; e.target.value = ''; for (const f of fs) { try { await addPhoto(await compressFile(f)); } catch (_) { } } } });
   refreshStrip();
   return h('div', { class: 'panel', style: { marginBottom: '14px' } },
-    h('div', { class: 'row' }, h('span', null, '📷 ', label), catSel, countSpan, h('span', { class: 'spacer' }),
-      !ro && h('button', { class: 'btn sm pri', type: 'button', onclick: async () => { const ok = await openCamera({ title: label, getCat: () => cat, setCat: v => { cat = v; catSel.value = v; }, onShot: (u, c) => addPhoto(u, c) }); if (!ok) camIn.click(); } }, '連續拍攝'),
+    h('div', { class: 'row' }, h('span', null, '📷 ', label), countSpan, h('span', { class: 'spacer' }),
+      !ro && h('button', { class: 'btn sm pri', type: 'button', onclick: async () => { const ok = await openCamera({ title: label, onShot: u => addPhoto(u) }); if (!ok) camIn.click(); } }, '連續拍攝'),
       !ro && h('button', { class: 'btn sm', type: 'button', onclick: () => upIn.click() }, '上傳'),
       h('button', { class: 'btn sm', type: 'button', onclick: () => go(photosTabIdx) }, '照片管理 ▶')),
     strip, camIn, upIn);
@@ -1121,11 +1370,12 @@ function tabExterior(ctx) {
 }
 function tabStructure(ctx) {
   const { ins, ro, touch } = ctx;
-  const panel = markPanel(ins.marks, { ro, views: ['str'], onChange: () => touch() });
+  ins.strokes = ins.strokes || []; ins.fills = ins.fills || [];
+  const panel = markPanel(ins.marks, { ro, views: ['str'], brush: true, strokes: ins.strokes, fills: ins.fills, onChange: () => touch() });
   return h('div', null,
     quickPhotoBar(ctx, '車體結構', '車體結構照片', ctx.photosIdx),
     h('div', { class: 'panel' }, panel,
-      h('div', { class: 'summary-row' }, h('span', { class: 'sm muted' }, '車體結構上的標記不計入板金片數；X 會自動顯示黃底。'))));
+      h('div', { class: 'summary-row' }, h('span', { class: 'sm muted' }, '車體結構上的標記不計入板金片數。'))));
 }
 
 function tabCheckGroup(ctx, cat, items) {
@@ -1153,7 +1403,7 @@ function tabNotes(ctx) {
   }
   drawNotes(); drawPhr();
   return h('div', null, quickPhotoBar(ctx, '其他', '車況註記照片', ctx.photosIdx),
-    h('div', { class: 'panel' }, h('h3', null, '車況輔助註記（快速片語，可複選）'), phr, h('p', { class: 'sm muted' }, '註記內容預覽（輸出到報告時每個片語一行並加句號）'), notes));
+    h('div', { class: 'panel' }, h('h3', null, '車況輔助註記（快速片語，可複選）'), phr, h('p', { class: 'sm muted' }, '註記內容預覽（輸出到報告時每個片語加句號，連續排列）'), notes));
 }
 
 function tabConfirm({ ins, ro, touch, go }) {
@@ -1253,7 +1503,7 @@ async function openCamera({ getCat, setCat, onShot, single, title }) {
   let stream, facing = 'environment', n = 0;
   const video = h('video', { autoplay: true, playsInline: true, muted: true });
   const flash = h('div', { class: 'flash' }), cnt = h('span', null, single ? '' : '已拍 0 張');
-  const catSel = selectEl(CATS, getCat(), v => setCat && setCat(v), null, ''); if (single) catSel.classList.add('hidden');
+  const catSel = getCat ? selectEl(CATS, getCat(), v => setCat && setCat(v), null, '') : { value: '' }; if (single && getCat) catSel.classList.add('hidden');
   const stop = () => stream && stream.getTracks().forEach(t => t.stop());
   const close = () => { stop(); ov.remove(); };
   async function start() {
@@ -1267,7 +1517,7 @@ async function openCamera({ getCat, setCat, onShot, single, title }) {
     if (single) close();
   };
   const ov = h('div', { class: 'overlay' },
-    h('div', { class: 'bar' }, h('b', null, title || '連續拍攝'), h('span', { class: 'spacer' }), catSel, h('button', { class: 'btn', onclick: () => { facing = facing === 'environment' ? 'user' : 'environment'; start(); } }, '切換鏡頭'), h('button', { class: 'btn pri', onclick: close }, single ? '取消' : '完成')),
+    h('div', { class: 'bar' }, h('b', null, title || '連續拍攝'), h('span', { class: 'spacer' }), getCat ? catSel : null, h('button', { class: 'btn', onclick: () => { facing = facing === 'environment' ? 'user' : 'environment'; start(); } }, '切換鏡頭'), h('button', { class: 'btn pri', onclick: close }, single ? '取消' : '完成')),
     h('div', { class: 'stage' }, video, flash),
     h('div', { class: 'cam-foot' }, cnt, h('button', { class: 'shutter', 'aria-label': '拍照', onclick: shoot })));
   document.body.append(ov); start(); return true;
@@ -1454,29 +1704,59 @@ function sampleInspection() {
   const ins = newInspection({ plate: 'ABC-1234', brand: 'TOYOTA', model: 'ALTIS', year: '2020', month: '5', cc: '1798', drive: '2WD', doors: '4門', wheelbase: '短軸', tires: '4', mileage: '68500', guarantee: 'yes', vin: 'JTDBR32E000000000', engineNo: '2ZR0000000', bodyRating: 'B+', interiorRating: 'A', tireChange: '2', inspectorName: cur.name, status: 'done', doneAt: Date.now() });
   ins.equip = { ikey: true, cruise: true, abs: true, srs: true, sunroof: true, alloy: true, climate: true }; ins.srsCount = '6'; ins.sunroof = '全景'; ins.alloy = '17吋';
   ins.checks = { '引擎滲漏油': true }; ins.phrases = ['引擎上部異音', '車內多泥沙', '左前葉子板烤漆'];
+  ins.fuel = '油電'; ins.shift = '手自排'; ins.equip.tailgate = true; ins.tailgateInfo = '感應式';
   const put = (v, label, t) => { const m = ins.marks.find(x => x.view === v && x.label === label); if (m) m.text = t; };
   put('ext', '左前葉子板', 'Ⓟ'); put('ext', '引擎蓋', 'P B'); put('ext', '右前門', '∆'); put('ext', '後保桿', 'r'); put('str', '左側大樑', 'X'); put('str', '防火牆', 'R');
   return ins;
 }
 const CELL = (l, v, cls = '') => `<div class="p-cell ${cls}"><small>${l}</small><b>${v == null || v === '' ? '&nbsp;' : esc(v)}</b></div>`;
-const mkHtml = (ins, view, tpl) => ins.marks.filter(m => m.view === view && m.text).map(m => `<div class="mk" style="left:${(m.x * 100).toFixed(2)}%;top:${(m.y * 100).toFixed(2)}%;color:${esc(m.color || '#1a47d1')};font-family:${esc(m.font || 'Arial')},Arial,var(--mark);font-size:${(tpl.markSize * (m.size || 26) / 26).toFixed(1)}px">${m.text.split('\n').map(line => `<div class="mk-line">${toks(line).map(t => `<span class="t${view === 'str' && t === 'X' ? ' x-y' : ''}">${esc(t)}</span>`).join('')}</div>`).join('')}</div>`).join('');
+const mkHtml = (ins, view, tpl) => ins.marks.filter(m => m.view === view && m.text).map(m => `<div class="mk" style="left:${(m.x * 100).toFixed(2)}%;top:${(m.y * 100).toFixed(2)}%;color:${esc(m.color || '#1a47d1')};font-family:${esc(m.font || 'Arial')},Arial,var(--mark);font-size:${(tpl.markSize * (m.size || 26) / 26).toFixed(1)}px">${m.text.split('\n').map(line => `<div class="mk-line">${toks(line).map(t => `${tokHtml(t, view)}`).join('')}</div>`).join('')}</div>`).join('');
+const strokesSvg = (ins, view) => {
+  const list = (ins.strokes || []).filter(x => x.view === view); if (!list.length) return '';
+  const H = Math.round(1000 * IMG_RATIO[view]);
+  return `<svg class="stk" viewBox="0 0 1000 ${H}">${list.map(x => `<path style="stroke-width:${x.w}" d="M${x.pts.map(p => (p[0] * 1000).toFixed(1) + ' ' + (p[1] * H).toFixed(1)).join(' L')}"/>`).join('')}</svg>`;
+};
+const cbx = on => `<i class="cbx${on ? ' on' : ''}"></i>`;
+const SVG_TOOL = '<svg viewBox="0 0 24 24" width="28" height="28"><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M5 19 16 8"/><path d="M19 19 8 8"/></g><rect x="13" y="3" width="9" height="5" rx="1" transform="rotate(45 17.5 5.5)" fill="#000"/><circle cx="6.2" cy="6.2" r="3.4" fill="none" stroke="#000" stroke-width="2.4"/></svg>';
+const SVG_TIRE = '<svg viewBox="0 0 24 24" width="28" height="28"><circle cx="12" cy="12" r="10.5" fill="#000"/><circle cx="12" cy="12" r="6.2" fill="#fff"/><circle cx="12" cy="12" r="2.4" fill="#000"/><path d="M12 6.2v11.6M6.2 12h11.6" stroke="#000" stroke-width="2"/></svg>';
 function secHtml(k, ins, tpl) {
-  const cb = (on, t) => `<span>${on ? '☑' : '☐'} ${esc(t)}</span>`;
-  if (k === 'header') return `<div class="p-head">${tpl.logo ? `<img src="${tpl.logo}" alt="">` : ''}<span class="cn">${esc(tpl.company)}</span><span class="p-hdrtxt">${esc(tpl.headerText)}</span></div><div class="p-title">${esc(tpl.title)}</div>`;
+  const V = v => (v == null || v === '') ? '&nbsp;' : esc(v);
+  const num = v => { const n = Number(String(v).replace(/,/g, '')); return isNaN(n) ? esc(v) : n.toLocaleString('en-US'); };
+  const PC = (area, label, body, cls = '') => `<div class="p-cell ${cls}" style="grid-area:${area}">${label ? `<small>${label}</small>` : ''}<b>${body}</b></div>`;
+  if (k === 'header') return `<div class="p-top"><div class="l">${tpl.logo ? `<img src="${tpl.logo}" alt="">` : `<span class="cn">${esc(tpl.company)}</span>`}</div><div class="t">${esc(tpl.title)}</div><div class="r">${esc(tpl.headerText)}</div></div>`;
   if (k === 'basic') {
-    const ym = ins.year ? `${ins.year} 年 ${ins.month || ''} 月` : '';
-    return `<div class="p-box p-basic">${CELL('車牌號碼', ins.plate)}${CELL('廠牌', ins.brand)}${CELL('車型', ins.model)}
-<div class="p-cell p-rate" style="grid-column:4;grid-row:1/3"><div class="lb">車 體 評 價</div><div class="big">${esc(ins.bodyRating)}</div></div>
-${CELL('出廠年月', ym)}${CELL('排氣量', ins.cc ? ins.cc + ' CC' : '')}${CELL('傳動', ins.drive)}
-${CELL('車門數', ins.doors)}${CELL('長短軸（輪胎數）', (ins.wheelbase || '') + (ins.tires ? `（${ins.tires} 輪）` : ''))}${CELL('里程', ins.mileage ? `${ins.mileage} ${ins.mileageUnit}` : '')}
-<div class="p-cell p-rate" style="grid-column:4;grid-row:3/5"><div class="lb">內 裝 評 價</div><div class="big">${esc(ins.interiorRating)}</div></div>
-${CELL('車身號碼', ins.vin)}${CELL('引擎號碼', ins.engineNo)}${CELL('里程保證', ins.guarantee === 'yes' ? '☑ 保證　☐ 不保證' : ins.guarantee === 'no' ? '☐ 保證　☑ 不保證' : '☐ 保證　☐ 不保證')}</div>`;
+    const drive = /^(\d)WD$/i.exec(ins.drive || '');
+    const doors = ins.doors === '其他' ? '其他' : String(ins.doors || '').replace(/門$/, '');
+    const wb = String(ins.wheelbase || '').replace(/軸$/, '');
+    const unit = String(ins.mileageUnit || 'KM').toUpperCase();
+    const g = ins.guarantee;
+    return `<div class="p-box p-basic">
+${PC('plate', '車牌號碼：', V(ins.plate))}${PC('brand', '廠牌：', V(ins.brand))}${PC('model', '車型：', V(ins.model))}
+${PC('mfg', '出廠日：', `<span class="v">${V(ins.year)}</span> <span class="u">年</span> <span class="v">${ins.month ? pad(ins.month) : '&nbsp;&nbsp;'}</span> <span class="u">月</span>`, 'r')}
+${PC('cc', '排氣量：', `<span class="v">${ins.cc ? num(ins.cc) : '&nbsp;'}</span> <span class="u">CC</span>`, 'r')}
+${PC('drive', '傳動：', drive ? `<span class="v">${drive[1]}</span> <span class="u">WD</span>` : `<span class="v">${V(ins.drive)}</span>`, 'r')}
+${PC('shift', '排檔：', `<span class="v">${V(String(ins.shift || '').replace(/排$/, ''))}</span> <span class="u">排</span>`, 'r')}
+${PC('doors', '車門數：', `<span class="v">${V(doors)}</span>${ins.doors === '其他' ? '' : ' <span class="u">門</span>'}`, 'r')}
+${PC('wheel', '長短軸（輪胎數）：', `<span class="v">${V(wb)}</span> <span class="u">軸</span> <span class="v">${V(ins.tires)}</span> <span class="u">輪</span>`, 'r')}
+<div class="p-cell p-mile" style="grid-area:mile"><small>儀錶現況顯示里程</small><div class="mu${unit === 'KM' ? '' : ' off'}">km</div><div class="mr"><span class="v">${ins.mileage ? num(ins.mileage) : '&nbsp;'}</span><span class="mu${unit === 'MILE' ? '' : ' off'}">mile</span></div></div>
+${PC('vin', '車身號碼：', V(ins.vin))}
+<div class="p-cell p-fuel" style="grid-area:fuel"><small>燃油：</small><b>${V(ins.fuel)}</b></div>
+<div class="p-cell p-guar" style="grid-area:guar">${`<span class="p-ck">${cbx(g === 'yes')}有保證</span><span class="p-ck">${cbx(g === 'no')}不保證</span>`}</div>
+${PC('eng', '引擎號碼：', V(ins.engineNo))}
+<div class="p-rate" style="grid-area:rate"><div class="rb"><div class="lb">車 體 評 價</div><div class="big">${esc(ins.bodyRating || '')}</div></div><div class="rb"><div class="lb">內 裝 評 價</div><div class="big">${esc(ins.interiorRating || '')}</div></div></div>
+</div>`;
   }
-  if (k === 'equipment') return `<div class="p-sec"><h4>車 輛 配 備</h4><div class="p-list">${EQUIP.map(([id, n]) => { let t = n; const ex = EQUIP_EXTRA[id], fld = EQUIP_FIELD[id]; if (ex && ins.equip[id] && ins[fld]) t += `（${esc(ins[fld])}${ex.unit || ''}）`; return cb(!!ins.equip[id], t); }).join('')}</div></div>`;
-  if (k === 'checks') return `<div class="p-sec"><h4>機 能 件 檢 查</h4><div class="p-list">${flatChecks().map(n => cb(!!ins.checks[n], n)).join('')}</div></div>`;
-  if (k === 'notes') return `<div class="p-sec"><h4>車 況 輔 助 註 記</h4><div class="p-notes">${ins.phrases.length ? ins.phrases.map(p => `<p>${esc(p)}。</p>`).join('') : '<p>無</p>'}</div></div>`;
-  if (k === 'diagrams') return `<div class="p-diag">${['ext', 'str'].map(v => `<div><h4>${DIAG[v].split('').join(' ')}</h4><div class="p-mkw"><img src="${IMG[v]}" alt="">${mkHtml(ins, v, tpl)}</div></div>`).join('')}</div>`;
-  if (k === 'summary') return `<div class="p-sum"><span>板金片數：<b>${countPanels(ins.marks)}</b> 片</span><span>輪胎更換數：<b>${ins.tireChange === '' ? '—' : esc(ins.tireChange)}</b> 條</span><span>查定士：<b>${esc(ins.inspectorName || uname(ins.inspectorId))}</b></span><span>${fmtDate(ins.doneAt || ins.updatedAt)}</span></div>`;
+  if (k === 'equipment') return `<div class="p-sec p-eq"><div class="p-list5"><span class="p-lab">車輛配備：</span>${EQUIP.map(([id, n]) => { const ex = EQUIP_EXTRA[id], fld = EQUIP_FIELD[id]; let extra = ''; if (ex) { const v = ins.equip[id] && ins[fld] ? esc(ins[fld]) : ''; extra = `(<em>${v || '&nbsp;&nbsp;&nbsp;'}</em>)`; } return `<span class="p-ck">${cbx(!!ins.equip[id])}${esc(n)}${extra}</span>`; }).join('')}</div></div>`;
+  if (k === 'checks') return `<div class="p-sec p-eq"><div class="p-list5">${flatChecks().map(n => `<span class="p-ck">${cbx(!!ins.checks[n])}${esc(n)}</span>`).join('')}</div></div>`;
+  if (k === 'notes') {
+    const txt = ins.phrases.map(p => esc(p) + '。').join('');
+    return `<div class="p-sec nb2"><h4>車 況 輔 助 註 記 ：</h4><div class="nt">${txt}</div></div>`;
+  }
+  if (k === 'diagrams') { const dh = tpl.diagH || 80; return `<div class="p-diag">${['ext', 'str'].map(v => `<div class="dg"><h4>${DIAG[v].split('').join(' ')}</h4><div class="p-mkw" style="width:${(dh / IMG_RATIO[v]).toFixed(1)}mm"><img src="${IMG[v]}" alt="">${fillImg(ins, v)}${strokesSvg(ins, v)}${mkHtml(ins, v, tpl)}</div></div>`).join('')}</div>`; }
+  if (k === 'summary') {
+    const name = ins.inspectorName || uname(ins.inspectorId);
+    return `<div class="p-foot"><span class="fi">${SVG_TOOL}<span class="ul">${countPanels(ins.marks)}</span></span><span class="fi">${SVG_TIRE}<span class="ul">${ins.tireChange === '' ? '&nbsp;' : esc(ins.tireChange)}</span></span><span class="fn">${esc(tpl.inspectorLabel || '查定士')}：<span class="ul wide">${esc(name)}</span></span><span class="fn">${tpl.hotline ? `諮詢專線：<b>${esc(tpl.hotline)}</b>` : ''}</span></div>`;
+  }
   if (k === 'internal') { const d = S.dispatches.find(x => x.id === ins.dispatchId); return `<div class="p-sec p-int"><h4>內 部 資 訊</h4>${d ? `<p>派工編號：${esc(d.no)}｜派工人員：${esc(d.dispatcher)}｜優先程度：${esc(d.priority)}</p>` : '<p>無派工紀錄</p>'}${(ins.autoLog || []).map(l => `<p>${fmtDT(l.t)}　${esc(l.rule)}：${esc(l.from || '—')} → ${esc(l.to || '—')}（${esc(l.by)}）</p>`).join('')}</div>`; }
   return '';
 }
@@ -1500,15 +1780,15 @@ function buildPages(ins, tpl, photos) {
     if (pg.length) flush();
   }
   const total = pages.length;
-  return pages.map((p, i) => `<section class="pdf-page" style="--pf:${tpl.font};--pfs:${tpl.fontSize};--rs:${tpl.ratingSize}"><div class="pg-in"><div class="pg-c" ${p.fit ? 'data-fit="1"' : ''}>${p.html}</div></div>${tpl.pageNo || tpl.footerText ? `<div class="foot"><span>${esc(tpl.footerText)}</span><span>${tpl.pageNo ? `第 ${i + 1} 頁 / 共 ${total} 頁` : ''}</span></div>` : ''}</section>`).join('') || '<section class="pdf-page"><div class="pg-in">此模板沒有啟用任何內容區塊</div></section>';
+  return pages.map((p, i) => `<section class="pdf-page${tpl.align === 'left' ? '' : ' al-c'}" style="--pf:${tpl.font};--pfs:${tpl.fontSize};--rs:${tpl.ratingSize}"><div class="pg-in"><div class="pg-c" ${p.fit ? 'data-fit="1"' : ''}>${p.html}</div></div>${tpl.pageNo || tpl.footerText ? `<div class="foot"><span>${esc(tpl.footerText)}</span><span>${tpl.pageNo ? `第 ${i + 1} 頁 / 共 ${total} 頁` : ''}</span></div>` : ''}</section>`).join('') || '<section class="pdf-page"><div class="pg-in">此模板沒有啟用任何內容區塊</div></section>';
 }
 function fitPages(root) {
   root.querySelectorAll('.pg-c[data-fit]').forEach(c => {
-    c.style.transform = ''; c.style.width = ''; const avail = c.parentElement.clientHeight, need = c.scrollHeight;
+    c.style.transform = ''; c.style.width = ''; const avail = c.parentElement.clientHeight, need = c.scrollHeight + 8;
     if (need > avail && avail > 0) { const r = Math.max(0.5, avail / need); c.style.transformOrigin = 'top left'; c.style.transform = `scale(${r})`; c.style.width = (100 / r) + '%'; }
   });
 }
-async function loadPhotoMap(ins) { const m = {}; await Promise.all(ins.photos.map(async p => m[p.id] = await getPhoto(p.id))); return m; }
+async function loadPhotoMap(ins) { await prepareFills(ins); const m = {}; await Promise.all(ins.photos.map(async p => m[p.id] = await getPhoto(p.id))); return m; }
 
 function pdfStage(html) {
   const hold = h('div', { style: { margin: '0 auto', position: 'relative' } });
@@ -1652,7 +1932,7 @@ function vMarks() {
       markPanel(t.marks, { ro, slotMode: true, onChange: () => saveNow('bodyTpls') })),
       h('div', { class: 'panel' }, h('h3', null, '標記規則'), h('div', { class: 'tbl-wrap' }, h('table', { class: 'tbl' }, h('thead', null, h('tr', null, ['標記', '計板金片數', '說明'].map(x => h('th', null, x)))),
         h('tbody', null, h('tr', null, h('td', { style: { fontFamily: 'var(--mark)', fontWeight: 700, color: '#1a47d1', fontSize: '18px' } }, 'Ⓟ Ⓑ ⓑ Ⓢ ∆ ∆∆ SS'), h('td', null, '✅ 每個 +1'), h('td', null, '僅車身外觀上的標記計入')),
-          h('tr', null, h('td', { style: { fontFamily: 'var(--mark)', fontWeight: 700, color: '#1a47d1', fontSize: '18px' } }, 'P X R r b B S H T F'), h('td', null, '❌ 不計'), h('td', null, '車體結構上的 X 顯示黃底；車體結構上的任何標記都不計板金')))))))
+          h('tr', null, h('td', { style: { fontFamily: 'var(--mark)', fontWeight: 700, color: '#1a47d1', fontSize: '18px' } }, 'P X R r b B S H T F'), h('td', null, '❌ 不計'), h('td', null, '車體結構上的任何標記都不計板金')))))))
       : h('div', { class: 'empty' }, '尚無模板');
     wrap.append(h('div', { class: 'page-h' }, h('h1', null, '車身標記管理')), h('div', { class: 'split' }, left, right));
   };
@@ -1696,7 +1976,7 @@ function tplForm(t) {
   const fonts = [['var(--font)', '黑體（預設）'], ['"Noto Serif TC","PMingLiU","Songti TC",serif', '宋體'], ['Arial,var(--font)', 'Arial']];
   modal({
     title: t ? '編輯模板' : '新增模板', wide: true,
-    body: h('div', null, h('div', { class: 'grid g2' }, field('模板名稱', i('name'), true), field('說明', i('desc')), field('公司名稱', i('company')), field('報告標題', i('title')), field('字體', selectEl(fonts, st.font, v => st.font = v)), field('內文字體大小（px）', i('fontSize', { type: 'number', min: 8, max: 16 })), field('標記文字大小（px）', i('markSize', { type: 'number', min: 10, max: 40 })), field('評價字體大小（px）', i('ratingSize', { type: 'number', min: 14, max: 48 })), field('照片每列張數', selectEl([['3', '3 張'], ['4', '4 張'], ['2', '2 張']], String(st.photoCols), v => st.photoCols = +v)), field('頁首文字', i('headerText')), field('頁尾文字', i('footerText')), field('公司 Logo', logoBox)),
+    body: h('div', null, h('div', { class: 'grid g2' }, field('模板名稱', i('name'), true), field('說明', i('desc')), field('公司名稱', i('company')), field('報告標題', i('title')), field('字體', selectEl(fonts, st.font, v => st.font = v)), field('內文字體大小（px）', i('fontSize', { type: 'number', min: 8, max: 16 })), field('標記文字大小（px）', i('markSize', { type: 'number', min: 10, max: 40 })), field('評價字體大小（px）', i('ratingSize', { type: 'number', min: 14, max: 120 })), field('車身圖高度（mm）', i('diagH', { type: 'number', min: 50, max: 110 })), field('查定士欄位名稱', i('inspectorLabel')), field('諮詢專線（選填）', i('hotline')), field('內文對齊', selectEl([['center', '置中'], ['left', '靠左']], st.align || 'center', v => st.align = v)), field('照片每列張數', selectEl([['3', '3 張'], ['4', '4 張'], ['2', '2 張']], String(st.photoCols), v => st.photoCols = +v)), field('頁首文字', i('headerText')), field('頁尾文字', i('footerText')), field('公司 Logo', logoBox)),
       h('label', { class: 'ck', style: { margin: '12px 0' } }, h('input', { type: 'checkbox', checked: st.pageNo, onchange: e => st.pageNo = e.target.checked }), '顯示頁碼'), h('h3', null, '內容區塊與順序'), secBox),
     buttons: [{ label: '取消' }, { label: '預覽', keep: true, fn: () => { previewTpl(st); return false; } }, { label: '儲存', cls: 'pri', fn: () => { if (!st.name.trim()) { toast('請輸入模板名稱', true); return false; } if (t) Object.assign(t, st); else S.pdfTpls.push(st); saveNow('pdfTpls'); log(t ? '編輯模板' : '新增模板', st.name); tplDraw(); } }]
   });
